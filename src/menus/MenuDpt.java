@@ -1,7 +1,8 @@
 package menus;
 
-import bbdd.Jdbc;
+import jdbc.Jdbc;
 import entidades.Dpt;
+import jdbc.JdbcDpt;
 
 import java.sql.Connection;
 import java.util.InputMismatchException;
@@ -28,14 +29,14 @@ public class MenuDpt {
             switch (accion) {
                 case 1 -> {
                     System.out.println("AÑADIR REGISTRO");
-                    Jdbc.insertarRegistro(conn);
+                    JdbcDpt.insertarRegistro(conn);
                 }
                 case 2 -> System.out.println("EDITAR REGISTRO");
                 case 3 -> {
                     System.out.println("BORRAR REGISTRO");
-                    Jdbc.borrarRegistro(conn);
+                    JdbcDpt.borrarRegistro(conn);
                 }
-                case 4 -> Dpt.mostrarRegistros(Jdbc.getDpt(conn));
+                case 4 -> Dpt.mostrarRegistros(JdbcDpt.consultarDpt(conn));
                 case 5 -> MenuNutricion.menuNutricion(conn);
                 default -> {
                     System.out.println("Número fuera de rango, vuelva a introducir un número: ");

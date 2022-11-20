@@ -1,8 +1,9 @@
 package menus;
 
-import bbdd.Jdbc;
 import entidades.Dieta;
 import entidades.Paciente;
+import jdbc.JdbcDieta;
+import jdbc.JdbcPaciente;
 
 import java.sql.Connection;
 import java.util.Scanner;
@@ -28,12 +29,12 @@ public class MenuNutricion {
                 case 1 -> {
                     System.out.println("HA INGRESADO A LA CONSULTA DE PACIENTES");
                     System.out.println("-----------------------------------");
-                    Paciente.mostrarPacientes(Jdbc.getPaciente(conn));
+                    Paciente.mostrarPacientes(JdbcPaciente.consultarPaciente(conn));
                 }
                 case 2 -> {
                     System.out.println("HA INGRESADO A LA CONSULTA DE DIETAS");
                     System.out.println("-----------------------------------");
-                    Dieta.mostrarDietas(Jdbc.getDieta(conn));
+                    Dieta.mostrarDietas(JdbcDieta.consultarDieta(conn));
                 }
                 case 3 -> {
                     System.out.println("HA INGRESADO A LA SECCIÓN TOMAS");

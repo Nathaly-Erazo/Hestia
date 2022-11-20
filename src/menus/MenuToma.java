@@ -1,7 +1,8 @@
 package menus;
 
-import bbdd.Jdbc;
+import jdbc.Jdbc;
 import entidades.Toma;
+import jdbc.JdbcToma;
 
 import java.sql.Connection;
 import java.util.InputMismatchException;
@@ -28,17 +29,17 @@ public class MenuToma {
             switch (accion) {
                 case 1 -> {
                     System.out.println("AÑADIR TOMA");
-                    Jdbc.insertarToma(conn);
+                    JdbcToma.insertarToma(conn);
                 }
                 case 2 -> {
                     System.out.println("EDITAR TOMA");
-                    Jdbc.editarToma(conn);
+                    JdbcToma.editarToma(conn);
                 }
                 case 3 -> {
                     System.out.println("BORRAR TOMA");
-                    Jdbc.borrarToma(conn);
+                    JdbcToma.borrarToma(conn);
                 }
-                case 4 -> Toma.mostrarTomas(Jdbc.getToma(conn));
+                case 4 -> Toma.mostrarTomas(JdbcToma.consultarToma(conn));
                 case 5 -> MenuNutricion.menuNutricion(conn);
                 default -> {
                     System.out.println("Número fuera de rango, vuelva a introducir un número: ");

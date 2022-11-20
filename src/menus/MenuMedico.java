@@ -1,10 +1,12 @@
 package menus;
 
 
-import bbdd.Jdbc;
 import entidades.Dieta;
 import entidades.Dpt;
 import entidades.Toma;
+import jdbc.JdbcDieta;
+import jdbc.JdbcDpt;
+import jdbc.JdbcToma;
 
 import java.sql.Connection;
 import java.util.InputMismatchException;
@@ -36,17 +38,17 @@ public class MenuMedico {
                 case 2 -> {
                     System.out.println("HA INGRESADO A LA CONSULTA DE TOMAS");
                     System.out.println("-----------------------------------");
-                    Toma.mostrarTomas(Jdbc.getToma(conn));
+                    Toma.mostrarTomas(JdbcToma.consultarToma(conn));
                 }
                 case 3 -> {
                     System.out.println("HA INGRESADO A LA CONSULTA DE DIETAS");
                     System.out.println("-----------------------------------");
-                    Dieta.mostrarDietas(Jdbc.getDieta(conn));
+                    Dieta.mostrarDietas(JdbcDieta.consultarDieta(conn));
                 }
                 case 4 -> {
                     System.out.println("HA INGRESADO A LA CONSULTA DE LOS REGISTROS");
                     System.out.println("-----------------------------------");
-                    Dpt.mostrarRegistros(Jdbc.getDpt(conn));
+                    Dpt.mostrarRegistros(JdbcDpt.consultarDpt(conn));
                 }
                 case 5 -> {
                     System.out.println("HASTA PRONTO");

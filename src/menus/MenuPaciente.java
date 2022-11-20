@@ -1,8 +1,8 @@
 package menus;
 
 
-import bbdd.Jdbc;
 import entidades.Paciente;
+import jdbc.JdbcPaciente;
 
 import java.sql.Connection;
 import java.util.InputMismatchException;
@@ -29,17 +29,17 @@ public class MenuPaciente {
             switch (accion) {
                 case 1 -> {
                     System.out.println("AÑADIR PACIENTE");
-                    Jdbc.insertarPaciente(conn);
+                    JdbcPaciente.insertarPaciente(conn);
                 }
                 case 2 -> {
                     System.out.println("EDITAR PACIENTE");
-                    Jdbc.editarPaciente(conn);
+                    JdbcPaciente.editarPaciente(conn);
                 }
                 case 3 -> {
                     System.out.println("BORRAR PACIENTE");
-                    Jdbc.borrarPaciente(conn);
+                    JdbcPaciente.borrarPaciente(conn);
                 }
-                case 4 -> Paciente.mostrarPacientes(Jdbc.getPaciente(conn));
+                case 4 -> Paciente.mostrarPacientes(JdbcPaciente.consultarPaciente(conn));
                 case 5 -> MenuMedico.menuMedico(conn);
                 default -> {
                     System.out.println("Número fuera de rango, vuelva a introducir un número: ");

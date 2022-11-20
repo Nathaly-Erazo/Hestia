@@ -1,15 +1,14 @@
-import bbdd.Jdbc;
+import jdbc.Jdbc;
 
 import menus.MenuPrincipal;
 
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Properties;
 
 
 public class Main {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
 
         String databaseUrl = "jdbc:mysql://localhost:3306/hestia";
         Properties info = new Properties();

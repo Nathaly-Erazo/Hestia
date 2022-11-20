@@ -1,7 +1,7 @@
 package menus;
 
-import bbdd.Jdbc;
 import entidades.Dieta;
+import jdbc.JdbcDieta;
 
 import java.sql.Connection;
 import java.util.InputMismatchException;
@@ -28,35 +28,35 @@ public class MenuDieta {
             switch (accion) {
                 case 1 -> {
                     System.out.println("AÑADIR DIETA");
-                    Jdbc.insertarDieta(conn);
+                    JdbcDieta.insertarDieta(conn);
                 }
-                case 2 -> System.out.println("EDITAR DIETA");
+                case 2 -> {
+                    System.out.println("EDITAR DIETA");
+                    JdbcDieta.editarDieta(conn);
+                }
                 case 3 -> {
                     System.out.println("BORRAR DIETA");
-                    Jdbc.borrarDieta(conn);
+                    JdbcDieta.borrarDieta(conn);
                 }
-                case 4 -> Dieta.mostrarDietas(Jdbc.getDieta(conn));
+                case 4 -> Dieta.mostrarDietas(JdbcDieta.consultarDieta(conn));
                 case 5 -> MenuCocina.menuCocina(conn);
                 default -> {
                     System.out.println("Número fuera de rango, vuelva a introducir un número: ");
                     menuDieta(conn);
                 }
-
             }
-
             do {
-                System.out.println("¿Quiere hacer otra acción? 1.-Sí 2.-Volver al menú anterior");
+                System.out.println("¿Quiere hacer otra acción? 1.-Sí 2.-Volver a Menú Cocina");
                 continuar = sc.nextInt();
                 switch (continuar) {
                     case 1 -> menuDieta(conn);
                     case 2 -> MenuCocina.menuCocina(conn);
                     default -> {
-                        System.out.println("Número no válido, Vuelva a intoducirlo");
+                        System.out.println("Número fuera de rango, Vuelva a intoducirlo");
                         seguir = false;
                     }
                 }
             } while (!seguir);
-
         } catch (InputMismatchException e) {
             System.out.println("Formato de número no válido");
             menuDieta(conn);

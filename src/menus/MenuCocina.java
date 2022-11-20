@@ -1,7 +1,8 @@
 package menus;
 
-import bbdd.Jdbc;
+import jdbc.Jdbc;
 import entidades.Toma;
+import jdbc.JdbcToma;
 
 import java.sql.Connection;
 import java.util.InputMismatchException;
@@ -31,7 +32,7 @@ public class MenuCocina {
                 case 2 -> {
                     System.out.println("HA INGRESADO A LA CONSULTA DE TOMAS");
                     System.out.println("-----------------------------------");
-                    Toma.mostrarTomas(Jdbc.getToma(conn));
+                    Toma.mostrarTomas(JdbcToma.consultarToma(conn));
                 }
                 case 3 -> {
                     System.out.println("HASTA PRONTO");
