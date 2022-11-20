@@ -31,13 +31,12 @@ public class JdbcDieta {
     }
 
     public static void insertarDieta(Connection conn)  {
-
         try {
             Scanner sc = new Scanner(System.in);
             boolean inserccion = true;
             System.out.println("""
                     ELIJA UNA OPCIÓN:\s
-                    1.-Insertar Dieta
+                    1.-Insertar Dieta\s
                     2.-Volver a Menú Cocina""");
             int opcion = sc.nextInt();
             switch (opcion) {
@@ -61,7 +60,7 @@ public class JdbcDieta {
                             case 1 -> {
                                 preparedStmt.execute(); //Se insertan los datos
                                 //Se muestra lo que se ha introducido
-                                System.out.println("DIETA INTRODUCIDA: \n" + dieta.toString());
+                                System.out.println("DIETA INTRODUCIDA");
                             }
                             case 2 -> MenuCocina.menuCocina(conn);
                             default -> {
@@ -92,7 +91,7 @@ public class JdbcDieta {
             Scanner sc = new Scanner(System.in);
             System.out.println("""
                     ELIJA UNA OPCIÓN:\s
-                    1.-Borrar Dieta
+                    1.-Borrar Dieta\s
                     2.-Volver a Menú Cocina""");
             int opcion = sc.nextInt();
             boolean borrado = true;
@@ -102,7 +101,7 @@ public class JdbcDieta {
                     System.out.println("Introduzca el código de la dieta que desea borrar: ");
                     int codigo = sc.nextInt();
                     do {
-                        System.out.println("¿Seguro que quiere borrar este resgistro? 1.-Sí 2.-No");
+                        System.out.println("¿Seguro que quiere borrar esta dieta? 1.-Sí 2.-No");
                         int borrar = sc.nextInt();
                         switch (borrar) {
                             case 1 -> {
@@ -207,12 +206,12 @@ public class JdbcDieta {
                         }
                         case 6 -> MenuCocina.menuCocina(conn);
                         default -> {
-                            System.out.println("Número fuera de rang., vuelva a introducir un número: ");
+                            System.out.println("Número fuera de rango, vuelva a introducir un número: ");
                             editarDieta(conn);
                         }
                     }
                     do {
-                        System.out.println("¿Seguro que quiere editar este resgistro? 1.-Sí 2.-No");
+                        System.out.println("¿Seguro que quiere editar esta dieta? 1.-Sí 2.-No");
                         int editar = scInt.nextInt();
                         switch (editar) {
                             case 1 -> {

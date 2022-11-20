@@ -9,7 +9,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import static jdbc.JdbcDieta.borrarDieta;
-
 public class JdbcDpt {
     public static ArrayList<Dpt> consultarDpt(Connection conn) throws SQLException {
         ArrayList<Dpt> registros = new ArrayList<>();
@@ -79,3 +78,5 @@ public class JdbcDpt {
         }
     }
 }
+// TODO: editar esta clase para que quede igual que JdbcDieta
+// TODO: crear el método editarRegistro
