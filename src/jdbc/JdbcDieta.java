@@ -17,7 +17,6 @@ public class JdbcDieta {
         ResultSet rs = stmt.executeQuery("SELECT * FROM dieta"); //Consulta para mostrar todos los datos de tabla
         while (rs.next()) { //While para rellenar el objeto dieta
             Dieta dieta = new Dieta(); //Se crea un objeto dieta de tipo Dieta
-
             //Con las siguientes instrucciones se guarda en el objeto dieta todos los campos
             dieta.setCodigo(rs.getInt("codigo"));
             dieta.setNombre(rs.getString("nombre"));
@@ -29,12 +28,12 @@ public class JdbcDieta {
         }
         return dietas;
     }
-
     public static void insertarDieta(Connection conn)  {
         try {
             Scanner sc = new Scanner(System.in);
-            boolean inserccion = true;
-            System.out.println("""
+            boolean insercion = true;
+            //Se le da la opción al usuario de volver al menú anterioir por si se hubiera confudido
+            System.out.println(""" 
                     ELIJA UNA OPCIÓN:\s
                     1.-Insertar Dieta\s
                     2.-Volver a Menú Cocina""");
@@ -54,7 +53,7 @@ public class JdbcDieta {
                     preparedStmt.setString(5, dieta.getCena());
 
                     do {
-                        System.out.println("¿Seguro que quiere insertar esta dieta? 1.-Sí 2.-No: \n" + dieta.toString());
+                        System.out.println("¿Seguro que quiere insertar esta dieta? 1.-Sí 2.-No: ");
                         int insertar = sc.nextInt();
                         switch (insertar) {
                             case 1 -> {
@@ -62,18 +61,18 @@ public class JdbcDieta {
                                 //Se muestra lo que se ha introducido
                                 System.out.println("DIETA INTRODUCIDA");
                             }
-                            case 2 -> MenuCocina.menuCocina(conn);
+                            case 2 -> MenuCocina.menuCocina(conn); //Le devuelve al menú cocina
                             default -> {
                                 System.out.println("Número fuera de rango. Vuelva a intoducirlo");
-                                inserccion = false;
+                                insercion = false;
                             }
                         }
-                    } while (!inserccion);
+                    } while (!insercion);
                 }
                 case 2 -> MenuCocina.menuCocina(conn);
                 default -> {
                     System.out.println("Número fuera de rango. Vuelva a intoducirlo");
-                    insertarDieta(conn);
+                    insertarDieta(conn); //Le devulve a este mismo menú
                 }
             }
         } catch (InputMismatchException e) {
@@ -84,9 +83,7 @@ public class JdbcDieta {
             insertarDieta(conn);
         }
     }
-
     public static void borrarDieta(Connection conn) {
-
         try {
             Scanner sc = new Scanner(System.in);
             System.out.println("""
@@ -100,31 +97,36 @@ public class JdbcDieta {
                     Dieta.mostrarDietas(consultarDieta(conn)); //Se muestran todas las dietas
                     System.out.println("Introduzca el código de la dieta que desea borrar: ");
                     int codigo = sc.nextInt();
-                    do {
-                        System.out.println("¿Seguro que quiere borrar esta dieta? 1.-Sí 2.-No");
-                        int borrar = sc.nextInt();
-                        switch (borrar) {
-                            case 1 -> {
-                                //Consulta para borrar una dieta según el código que ha introducido el usuario
-                                String query = "DELETE FROM dieta WHERE codigo = ?";
-                                PreparedStatement preparedStmt = conn.prepareStatement(query);
-                                preparedStmt.setInt(1, codigo);
+                    if (consultarSiExiste(conn,codigo) != 0){ //Se controla que la dieta exista
+                        do {
+                            System.out.println("¿Seguro que quiere borrar esta dieta? 1.-Sí 2.-No");
+                            int borrar = sc.nextInt();
+                            switch (borrar) {
+                                case 1 -> {
+                                    //Consulta para borrar una dieta según el código que ha introducido el usuario
+                                    String query = "DELETE FROM dieta WHERE codigo = ?";
+                                    PreparedStatement preparedStmt = conn.prepareStatement(query);
+                                    preparedStmt.setInt(1, codigo);
 
-                                preparedStmt.execute();
-                                System.out.println("DIETA BORRADA");
+                                    preparedStmt.execute();
+                                    System.out.println("DIETA BORRADA");
+                                }
+                                case 2 -> MenuCocina.menuCocina(conn); //Se le devulve al menú cocina
+                                default -> {
+                                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                                    borrado = false;
+                                }
                             }
-                            case 2 -> MenuCocina.menuCocina(conn);
-                            default -> {
-                                System.out.println("Número fuera de rango. Vuelva a intoducirlo");
-                                borrado = false;
-                            }
-                        }
-                    } while (!borrado);
+                        } while (!borrado); //Se controla que la opción insertada sea válida
+                    } else {
+                        System.out.println("La dieta no existe");
+                        borrarDieta(conn); //Si no existe se le devuelve a este menú
+                    }
                 }
-                case 2 -> MenuCocina.menuCocina(conn);
+                case 2 -> MenuCocina.menuCocina(conn); //Se le devulve al menú cocina
                 default -> {
                     System.out.println("Número fuera de rango. Vuelva a intoducirlo");
-                    borrarDieta(conn);
+                    borrarDieta(conn); //Si el númro no es válido se le devuelve a este menú
                 }
             }
         } catch (InputMismatchException e) {
@@ -135,11 +137,10 @@ public class JdbcDieta {
             borrarDieta(conn);
         }
     }
-
     public static void editarDieta(Connection conn) throws SQLException {
         String query = "UPDATE dieta SET "; //Se inicializa la query y luego se completará según el campo a editar
-        boolean seguir = true;
-        boolean edicion = true;
+        boolean seguir = true; //Controlar que quiere seguir editando o no
+        boolean edicion = true; //Controlar que quiere realizar la edición
         Scanner scInt = new Scanner(System.in);
         Scanner scString = new Scanner(System.in);
         PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -154,7 +155,8 @@ public class JdbcDieta {
                     Dieta.mostrarDietas(JdbcDieta.consultarDieta(conn)); //Muestra todas las dietas
                     System.out.println("Introducir código de la dieta que desea editar: ");
                     int codigo = scInt.nextInt();
-                    System.out.println("""
+                    if (consultarSiExiste(conn,codigo) != 0){ //Controlar que la dieta exista
+                        System.out.println("""
                             ¿Qué campo quiere editar de la dieta?:\s
                             1.-Nombre\s
                             2.-Desayuno\s
@@ -162,81 +164,85 @@ public class JdbcDieta {
                             4.-Merienda\s
                             5.-Cena\s
                             6.-Volver a Menú Cocina""");
-                    int campo = scInt.nextInt();
-                    switch (campo) {
-                        case 1 -> {
-                            System.out.println("Introduzca el nuevo nombre: ");
-                            String nombre = scString.nextLine();
-                            query += "nombre = ? WHERE codigo = ?";
-                            preparedStmt = conn.prepareStatement(query);
-                            preparedStmt.setString(1, nombre);
-                            preparedStmt.setInt(2, codigo);
-                        }
-                        case 2 -> {
-                            System.out.println("Introduzca el nuevo desayuno: ");
-                            String desayuno = scString.nextLine();
-                            query += "desayuno = ? WHERE codigo = ?";
-                            preparedStmt = conn.prepareStatement(query);
-                            preparedStmt.setString(1, desayuno);
-                            preparedStmt.setInt(2, codigo);
-                        }
-                        case 3 -> {
-                            System.out.println("Introduzca la nueva comida: ");
-                            String comida = scString.nextLine();
-                            query += "comida = ? WHERE codigo = ?";
-                            preparedStmt = conn.prepareStatement(query);
-                            preparedStmt.setString(1, comida);
-                            preparedStmt.setInt(2, codigo);
-                        }
-                        case 4 -> {
-                            System.out.println("Introduzca la nueva merienda: ");
-                            String merienda = scString.nextLine();
-                            query += "merienda = ? WHERE codigo = ?";
-                            preparedStmt = conn.prepareStatement(query);
-                            preparedStmt.setString(1, merienda);
-                            preparedStmt.setInt(2, codigo);
-                        }
-                        case 5 -> {
-                            System.out.println("Introduzca la nueva cena: ");
-                            String cena = scString.nextLine();
-                            query += "cena = ? WHERE codigo = ?";
-                            preparedStmt = conn.prepareStatement(query);
-                            preparedStmt.setString(1, cena);
-                            preparedStmt.setInt(2, codigo);
-                        }
-                        case 6 -> MenuCocina.menuCocina(conn);
-                        default -> {
-                            System.out.println("Número fuera de rango, vuelva a introducir un número: ");
-                            editarDieta(conn);
-                        }
-                    }
-                    do {
-                        System.out.println("¿Seguro que quiere editar esta dieta? 1.-Sí 2.-No");
-                        int editar = scInt.nextInt();
-                        switch (editar) {
+                        int campo = scInt.nextInt();
+                        switch (campo) {
                             case 1 -> {
-                                preparedStmt.execute(); //Se inserta el campo que se ha editado
-                                System.out.println("DIETA EDITADA");
+                                System.out.println("Introduzca el nuevo nombre: ");
+                                String nombre = scString.nextLine();
+                                query += "nombre = ? WHERE codigo = ?";
+                                preparedStmt = conn.prepareStatement(query);
+                                preparedStmt.setString(1, nombre);
+                                preparedStmt.setInt(2, codigo);
                             }
-                            case 2 -> MenuCocina.menuCocina(conn);
+                            case 2 -> {
+                                System.out.println("Introduzca el nuevo desayuno: ");
+                                String desayuno = scString.nextLine();
+                                query += "desayuno = ? WHERE codigo = ?";
+                                preparedStmt = conn.prepareStatement(query);
+                                preparedStmt.setString(1, desayuno);
+                                preparedStmt.setInt(2, codigo);
+                            }
+                            case 3 -> {
+                                System.out.println("Introduzca la nueva comida: ");
+                                String comida = scString.nextLine();
+                                query += "comida = ? WHERE codigo = ?";
+                                preparedStmt = conn.prepareStatement(query);
+                                preparedStmt.setString(1, comida);
+                                preparedStmt.setInt(2, codigo);
+                            }
+                            case 4 -> {
+                                System.out.println("Introduzca la nueva merienda: ");
+                                String merienda = scString.nextLine();
+                                query += "merienda = ? WHERE codigo = ?";
+                                preparedStmt = conn.prepareStatement(query);
+                                preparedStmt.setString(1, merienda);
+                                preparedStmt.setInt(2, codigo);
+                            }
+                            case 5 -> {
+                                System.out.println("Introduzca la nueva cena: ");
+                                String cena = scString.nextLine();
+                                query += "cena = ? WHERE codigo = ?";
+                                preparedStmt = conn.prepareStatement(query);
+                                preparedStmt.setString(1, cena);
+                                preparedStmt.setInt(2, codigo);
+                            }
+                            case 6 -> MenuCocina.menuCocina(conn);
                             default -> {
-                                System.out.println("Número fuera de rango. Vuelva a intoducirlo");
-                                edicion = false;
+                                System.out.println("Número fuera de rango, vuelva a introducir un número: ");
+                                editarDieta(conn);
                             }
                         }
-                    } while (!edicion);
-                    do {
-                        System.out.println("¿Quiere editar otro campo? 1.-Sí 2.-Volver a Menú Cocina");
-                        int continuar = scInt.nextInt();
-                        switch (continuar) {
-                            case 1 -> editarDieta(conn);
-                            case 2 -> MenuCocina.menuCocina(conn);
-                            default -> {
-                                System.out.println("Número fuera de rango. Vuelva a intoducirlo");
-                                seguir = false;
+                        do {
+                            System.out.println("¿Seguro que quiere editar esta dieta? 1.-Sí 2.-No");
+                            int editar = scInt.nextInt();
+                            switch (editar) {
+                                case 1 -> {
+                                    preparedStmt.execute(); //Se inserta el campo que se ha editado
+                                    System.out.println("DIETA EDITADA");
+                                }
+                                case 2 -> MenuCocina.menuCocina(conn);
+                                default -> {
+                                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                                    edicion = false;
+                                }
                             }
-                        }
-                    } while (!seguir);
+                        } while (!edicion);
+                        do {
+                            System.out.println("¿Quiere editar otro campo? 1.-Sí 2.-Volver a Menú Cocina");
+                            int continuar = scInt.nextInt();
+                            switch (continuar) {
+                                case 1 -> editarDieta(conn);
+                                case 2 -> MenuCocina.menuCocina(conn);
+                                default -> {
+                                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                                    seguir = false;
+                                }
+                            }
+                        } while (!seguir);
+                    } else {
+                        System.out.println("La dieta no existe");
+                        editarDieta(conn);//Si no existe se le devuleve a este menú
+                    }
                 }
                 case 2 -> MenuCocina.menuCocina(conn);
                 default -> {
@@ -251,5 +257,17 @@ public class JdbcDieta {
             System.out.println("Error indeterminado");
             editarDieta(conn);
         }
+    }
+    private static int consultarSiExiste(Connection conn, int codigo) throws SQLException {
+        //Esta clase sirve para comprobar si existe la dieta que se quiere borrar o editar
+        int resultado = 0;
+        //Consulta para saber si existe. Se crea un alias (resultado) para referenciarlo como si fuera una columna
+        String query = "SELECT EXISTS (SELECT * FROM dieta WHERE codigo=" + codigo + ") AS resultado";
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        while (rs.next()){
+            resultado = rs.getInt("resultado");
+        }
+        return resultado;
     }
 }

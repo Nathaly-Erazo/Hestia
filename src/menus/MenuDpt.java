@@ -1,6 +1,5 @@
 package menus;
 
-import jdbc.Jdbc;
 import entidades.Dpt;
 import jdbc.JdbcDpt;
 
@@ -31,7 +30,10 @@ public class MenuDpt {
                     System.out.println("AÑADIR REGISTRO");
                     JdbcDpt.insertarRegistro(conn);
                 }
-                case 2 -> System.out.println("EDITAR REGISTRO");
+                case 2 -> {
+                    System.out.println("EDITAR REGISTRO");
+                    JdbcDpt.editarRegistro(conn);
+                }
                 case 3 -> {
                     System.out.println("BORRAR REGISTRO");
                     JdbcDpt.borrarRegistro(conn);

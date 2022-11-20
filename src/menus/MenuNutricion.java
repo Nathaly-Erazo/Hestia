@@ -41,7 +41,7 @@ public class MenuNutricion {
                     MenuToma.menuToma(conn);
                 }
                 case 4 -> {
-                    System.out.println("HA INGRESADO A LA SEECIÓN REGISTRO");
+                    System.out.println("HA INGRESADO A LA SECCIÓN REGISTRO");
                     MenuDpt.menuDpt(conn);
                 }
                 case 5 -> {

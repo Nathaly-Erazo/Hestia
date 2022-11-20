@@ -3,8 +3,8 @@ package jdbc;
 import java.sql.*;
 import java.util.Properties;
 
-//En esta clase se encuentra la conexión con la base de datos
-public class Jdbc {
+//En esta clase se encuentra la configuración de la conexión con la base de datos
+public class JdbcConfig {
 
 
     public static Connection getConnection(String databaseUrl, Properties info) {

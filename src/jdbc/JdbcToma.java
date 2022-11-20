@@ -41,7 +41,7 @@ public class JdbcToma {
                     preparedStmt.setInt(1, toma.getCodigo());
                     preparedStmt.setString(2, toma.getNombre());
                     do {
-                        System.out.println("¿Seguro que quiere insertar esta toma? 1.-Sí 2.-No: \n" + toma.toString());
+                        System.out.println("¿Seguro que quiere insertar esta toma? 1.-Sí 2.-No: ");
                         int insertar = sc.nextInt();
                         switch (insertar) {
                             case 1 -> {
@@ -71,7 +71,6 @@ public class JdbcToma {
         }
     }
     public static void borrarToma(Connection conn) {
-
         try {
             Scanner sc = new Scanner(System.in);
             System.out.println("""
@@ -85,25 +84,30 @@ public class JdbcToma {
                     Toma.mostrarTomas(consultarToma(conn));
                     System.out.println("Introducir código de la toma que desea borrar: ");
                     int codigo = sc.nextInt();
-                    do {
-                        System.out.println("¿Seguro que quiere borrar esta toma? 1.-Sí 2.-No");
-                        int borrar = sc.nextInt();
-                        switch (borrar) {
-                            case 1 -> {
-                                String query = "DELETE FROM toma WHERE codigo = ?";
-                                PreparedStatement preparedStmt = conn.prepareStatement(query);
-                                preparedStmt.setInt(1, codigo);
+                    if (consultarSiExiste(conn,codigo) != 0){
+                        do {
+                            System.out.println("¿Seguro que quiere borrar esta toma? 1.-Sí 2.-No");
+                            int borrar = sc.nextInt();
+                            switch (borrar) {
+                                case 1 -> {
+                                    String query = "DELETE FROM toma WHERE codigo = ?";
+                                    PreparedStatement preparedStmt = conn.prepareStatement(query);
+                                    preparedStmt.setInt(1, codigo);
 
-                                preparedStmt.execute();
-                                System.out.println("TOMA BORRADA");
+                                    preparedStmt.execute();
+                                    System.out.println("TOMA BORRADA");
+                                }
+                                case 2 -> MenuNutricion.menuNutricion(conn);
+                                default -> {
+                                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                                    borrado = false;
+                                }
                             }
-                            case 2 -> MenuNutricion.menuNutricion(conn);
-                            default -> {
-                                System.out.println("Número fuera de rango. Vuelva a intoducirlo");
-                                borrado = false;
-                            }
-                        }
-                    } while (!borrado);
+                        } while (!borrado);
+                    } else {
+                        System.out.println("La toma no existe");
+                        borrarToma(conn);
+                    }
                 }
                 case 2 -> MenuNutricion.menuNutricion(conn);
                 default -> {
@@ -135,27 +139,32 @@ public class JdbcToma {
                     Toma.mostrarTomas(consultarToma(conn));
                     System.out.println("Introducir código de la toma que desea editar: ");
                     int codigo = scInt.nextInt();
-                    System.out.println("Introduzca el nuevo nombre: ");
-                    String nombre = scString.nextLine();
-                    do {
-                        System.out.println("¿Seguro que quiere editar esta toma? 1.-Sí 2.-No");
-                        int editar = scInt.nextInt();
-                        switch (editar) {
-                            case 1 -> {
-                                PreparedStatement preparedStmt = conn.prepareStatement(query);
-                                preparedStmt.setString(1, nombre);
-                                preparedStmt.setInt(2, codigo);
+                    if (consultarSiExiste(conn,codigo) != 0){
+                        System.out.println("Introduzca el nuevo nombre: ");
+                        String nombre = scString.nextLine();
+                        do {
+                            System.out.println("¿Seguro que quiere editar esta toma? 1.-Sí 2.-No");
+                            int editar = scInt.nextInt();
+                            switch (editar) {
+                                case 1 -> {
+                                    PreparedStatement preparedStmt = conn.prepareStatement(query);
+                                    preparedStmt.setString(1, nombre);
+                                    preparedStmt.setInt(2, codigo);
 
-                                preparedStmt.execute();
-                                System.out.println("TOMA EDITADA");
+                                    preparedStmt.execute();
+                                    System.out.println("TOMA EDITADA");
+                                }
+                                case 2 -> MenuNutricion.menuNutricion(conn);
+                                default -> {
+                                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                                    edicion = false;
+                                }
                             }
-                            case 2 -> MenuNutricion.menuNutricion(conn);
-                            default -> {
-                                System.out.println("Número fuera de rango. Vuelva a intoducirlo");
-                                edicion = false;
-                            }
-                        }
-                    } while (!edicion);
+                        } while (!edicion);
+                    } else {
+                        System.out.println("La toma no existe");
+                        editarToma(conn);
+                    }
                 }
                 case 2 -> MenuNutricion.menuNutricion(conn);
                 default -> {
@@ -170,6 +179,16 @@ public class JdbcToma {
             System.out.println("Error indeterminado");
             editarToma(conn);
         }
+    }
+    private static int consultarSiExiste(Connection conn, int codigo) throws SQLException {
+        int resultado = 0;
+        String query = "SELECT EXISTS (SELECT * FROM toma WHERE codigo=" + codigo + ") AS resultado";
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        while (rs.next()){
+            resultado = rs.getInt("resultado");
+        }
+        return resultado;
     }
 
 }

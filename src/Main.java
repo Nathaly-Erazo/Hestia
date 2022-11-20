@@ -1,4 +1,4 @@
-import jdbc.Jdbc;
+import jdbc.JdbcConfig;
 
 import menus.MenuPrincipal;
 
@@ -15,7 +15,7 @@ public class Main {
         info.put("user", "root");
         info.put("password", "");
 
-        Connection dbConnection = Jdbc.getConnection(databaseUrl, info);
+        Connection dbConnection = JdbcConfig.getConnection(databaseUrl, info);
 
         System.out.println("BIENVENIDO/A A HESTIA");
 

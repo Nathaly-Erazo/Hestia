@@ -59,18 +59,18 @@ public class Dpt {
     public String toString() {
         return "DIETAS ASOCIADAS AL PACIENTE\n" +
                 "Código: " + codigo + "\n" +
-                "entidades.Paciente: " + nhcPaciente + "\n" +
-                "Fecha: " + fecha + "\n" +
-                "entidades.Dieta: " + codigoDieta + "\n" +
-                "entidades.Toma: " + codigoDieta;
+                "Paciente: " + nhcPaciente + "\n" +
+                "Dieta: " + codigoDieta + "\n" +
+                "Toma: " + codigoDieta + "\n" +
+                "Fecha: " + fecha;
 
     }
 
     //Método para mostar los datos de la tabla dieta_paciente_toma
     public static void mostrarRegistros(ArrayList<Dpt> registros) {
         for (Dpt registro : registros) {
-            System.out.println("Código: " + registro.getCodigo() + " |Fecha: " + registro.getFecha() + " |NHC entidades.Paciente: " + registro.getNhcPaciente() +
-                    " |entidades.Dieta: " + registro.getCodigoDieta() + " |entidades.Toma: " + registro.getCodigoToma());
+            System.out.println("Código: " + registro.getCodigo()  + " |NHC Paciente: " + registro.getNhcPaciente() +
+                    " |Dieta: " + registro.getCodigoDieta() + " |Toma: " + registro.getCodigoToma() + " |Fecha: " + registro.getFecha());
             System.out.println("-----------------------------------");
         }
     }
@@ -81,13 +81,13 @@ public class Dpt {
         Scanner scString = new Scanner(System.in);
 
         System.out.println("REGISTRO DE DIETAS DEL PACIENTE");
-        System.out.println("Fecha (yyyy-mm-dd): ");
-        this.setFecha(scString.nextLine());
+        System.out.println("Paciente: ");
+        this.setNhcPaciente(scInt.nextInt());
         System.out.println("Dieta: ");
         this.setCodigoDieta(scInt.nextInt());
         System.out.println("Toma: ");
         this.setCodigoToma(scInt.nextInt());
-        System.out.println("Paciente: ");
-        this.setNhcPaciente(scInt.nextInt());
+        System.out.println("Fecha (yyyy-mm-dd): ");
+        this.setFecha(scString.nextLine());
     }
 }

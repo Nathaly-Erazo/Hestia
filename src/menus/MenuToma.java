@@ -1,6 +1,5 @@
 package menus;
 
-import jdbc.Jdbc;
 import entidades.Toma;
 import jdbc.JdbcToma;
 
