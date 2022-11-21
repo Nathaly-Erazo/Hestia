@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Dieta {
-    // Los atributos que va a tener esta clase son: código, nombre, desayuno, comida, merienda y cena.
-    //Crear los atributos.
+    //En esta clase se guardan los datos de la tabla dieta
+    //Los atributos que va a tener esta clase son: código, nombre, desayuno, comida, merienda y cena
+    //Crear los atributos
     private int codigo;
     private String nombre;
     private String desayuno;
@@ -63,17 +64,6 @@ public class Dieta {
         this.cena = cena;
     }
 
-    // Método para mostar los datos de una dieta
-    @Override
-    public String toString() {
-        return "DIETA\n" +
-                "Código: " + codigo + "\n" +
-                "Nombre: " + nombre + "\n" +
-                "Desayuno: " + desayuno + "\n" +
-                "Comida: " + comida + "\n" +
-                "Merienda: " + merienda + "\n" +
-                "Cena: " + cena;
-    }
     //Método para mostar los datos de la tabla Dieta
     public static void mostrarDietas (ArrayList<Dieta> dietas){
         for (Dieta dieta: dietas){

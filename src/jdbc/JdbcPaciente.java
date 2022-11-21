@@ -73,6 +73,9 @@ public class JdbcPaciente {
         } catch (InputMismatchException e) {
             System.out.println("Formato de número no válido");
             insertarPaciente(conn);
+        } catch (SQLException e){
+            System.out.println("El paciente ya existe");
+            insertarPaciente(conn);
         } catch (Exception e) {
             System.out.println("Error indeterminado");
             insertarPaciente(conn);
@@ -131,8 +134,8 @@ public class JdbcPaciente {
             System.out.println("Error indeterminado");
             borrarPaciente(conn);
         }
-    } //
-    public static void editarPaciente(Connection conn) throws SQLException { //TODO: Controlar que el nhc introducido realmente existe
+    }
+    public static void editarPaciente(Connection conn) throws SQLException {
         String query = "UPDATE paciente SET ";
         boolean seguir = true;
         boolean edicion = true;
@@ -244,7 +247,6 @@ public class JdbcPaciente {
             editarPaciente(conn);
         }
     }
-
     private static int consultarSiExiste(Connection conn, int nhc) throws SQLException {
         int resultado = 0;
         String query = "SELECT EXISTS (SELECT * FROM paciente WHERE nhc=" + nhc + ") AS resultado";

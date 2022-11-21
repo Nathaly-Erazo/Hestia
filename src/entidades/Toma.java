@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Toma {
-    //codigo y nombre
+    //En esta clase se guardan los datos de la tabla toma
+    //Esta clase tiene los atributos codigo y nombre
+    //Se crean los atributos
     private int codigo;
     private String nombre;
 
-
+    //Se crean los get y set de cada atributo
     public int getCodigo() {
         return codigo;
     }
@@ -25,12 +27,7 @@ public class Toma {
         this.nombre = nombre;
     }
 
-    @Override
-    public String toString() {
-        return "TOMA\n" +
-                "Código: " + codigo + "\n" +
-                "Nombre: " + nombre;
-    }
+    //Método para mostrar las tomas
     public static void mostrarTomas (ArrayList<Toma> tomas){
         for (Toma toma: tomas){
             System.out.println("Código: " + toma.getCodigo() + " Nombre: " + toma.getNombre());
@@ -38,6 +35,7 @@ public class Toma {
         }
     }
 
+    //Método para recoger los datos de la toma.
     public void recogerDatosToma() {
         Scanner scString = new Scanner(System.in);
 

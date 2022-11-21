@@ -2,7 +2,6 @@ import jdbc.JdbcConfig;
 
 import menus.MenuPrincipal;
 
-
 import java.sql.Connection;
 import java.util.Properties;
 
@@ -21,5 +20,4 @@ public class Main {
 
         MenuPrincipal.menuPrincipal(dbConnection);
     }
-
 }

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Paciente {
-    // Nombre, apellidos, habitación, NHC y observaciones
-
+    //En esta clase se guardarán los datos de la tabla paciente
+    // Los atributos de esta calse son: Nombre, apellidos, habitación, NHC y observaciones
     // Crear las variables que hacen referencia a los atributos de paciente.
     private String nombre;
     private String apellidos;
@@ -54,16 +54,7 @@ public class Paciente {
         this.nhc = nhc;
     }
 
-    //El siguiente método mostrará la información
-    @Override
-    public String toString() {
-        return "PACIENTE\n" +
-                "Nombre: " + nombre + "\n" +
-                "Apellidos: " + apellidos + "\n" +
-                "Observaciones: " + observaciones + "\n" +
-                "Habitación: " + habitacion + "\n" +
-                "NHC: " + nhc;
-    }
+    //Método para mostar los datos de la tabla pacientes
     public static void mostrarPacientes (ArrayList<Paciente> pacientes){
         for (Paciente paciente: pacientes){
             System.out.println("Nombre: " + paciente.getNombre() + " |Apellidos: " + paciente.getApellidos() +

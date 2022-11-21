@@ -54,18 +54,6 @@ public class Dpt {
         this.nhcPaciente = nhcPaciente;
     }
 
-    // Método para mostar los datos de un registro
-    @Override
-    public String toString() {
-        return "DIETAS ASOCIADAS AL PACIENTE\n" +
-                "Código: " + codigo + "\n" +
-                "Paciente: " + nhcPaciente + "\n" +
-                "Dieta: " + codigoDieta + "\n" +
-                "Toma: " + codigoDieta + "\n" +
-                "Fecha: " + fecha;
-
-    }
-
     //Método para mostar los datos de la tabla dieta_paciente_toma
     public static void mostrarRegistros(ArrayList<Dpt> registros) {
         for (Dpt registro : registros) {
