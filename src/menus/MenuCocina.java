@@ -42,7 +42,6 @@ public class MenuCocina {
                     menuCocina(conn);
                 }
             }
-
             do {
                 System.out.println("¿Quiere hacer otra acción? 1.-Sí 2.-No");
                 continuar = sc.nextInt();
@@ -58,7 +57,6 @@ public class MenuCocina {
                     }
                 }
             } while (!seguir);
-
         } catch (InputMismatchException e) {
             System.out.println("Formato de número no válido");
             menuCocina(conn);

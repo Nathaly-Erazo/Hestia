@@ -69,11 +69,11 @@ public class Dpt {
         Scanner scString = new Scanner(System.in);
 
         System.out.println("REGISTRO DE DIETAS DEL PACIENTE");
-        System.out.println("Paciente: ");
+        System.out.println("Paciente (NHC): ");
         this.setNhcPaciente(scInt.nextInt());
-        System.out.println("Dieta: ");
+        System.out.println("Código de Dieta (1.-B 2.-BL 3.-SMBL 4.-SMLQ 5.-LQ 6.-TX 7.-ABS): ");
         this.setCodigoDieta(scInt.nextInt());
-        System.out.println("Toma: ");
+        System.out.println("Código de Toma (1.-Desayuno 2.-Comida 3.-Merienda 4.-Cena): ");
         this.setCodigoToma(scInt.nextInt());
         System.out.println("Fecha (yyyy-mm-dd): ");
         this.setFecha(scString.nextLine());

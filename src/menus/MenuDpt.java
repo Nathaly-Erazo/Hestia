@@ -24,7 +24,6 @@ public class MenuDpt {
                     5.-Volver a Menú Nutrición""");
 
             accion = sc.nextInt();
-
             switch (accion) {
                 case 1 -> {
                     System.out.println("AÑADIR REGISTRO");
@@ -44,9 +43,7 @@ public class MenuDpt {
                     System.out.println("Número fuera de rango, vuelva a introducir un número: ");
                     menuDpt(conn);
                 }
-
             }
-
             do {
                 System.out.println("¿Quiere hacer otra acción? 1.-Sí 2.-Volver a Menú Nutrición");
                 continuar = sc.nextInt();
@@ -59,7 +56,6 @@ public class MenuDpt {
                     }
                 }
             } while (!seguir);
-
         } catch (InputMismatchException e) {
             System.out.println("Formato de número no válido");
             menuDpt(conn);

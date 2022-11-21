@@ -55,8 +55,8 @@ public class Paciente {
     }
 
     //Método para mostar los datos de la tabla pacientes
-    public static void mostrarPacientes (ArrayList<Paciente> pacientes){
-        for (Paciente paciente: pacientes){
+    public static void mostrarPacientes(ArrayList<Paciente> pacientes) {
+        for (Paciente paciente : pacientes) {
             System.out.println("Nombre: " + paciente.getNombre() + " |Apellidos: " + paciente.getApellidos() +
                     " |NHC: " + paciente.getNhc() + " |Observaciones: " + paciente.getObservaciones() + " |Habitación: " + paciente.getHabitacion());
             System.out.println("-----------------------------------");

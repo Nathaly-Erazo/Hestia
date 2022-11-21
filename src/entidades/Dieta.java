@@ -65,8 +65,8 @@ public class Dieta {
     }
 
     //Método para mostar los datos de la tabla Dieta
-    public static void mostrarDietas (ArrayList<Dieta> dietas){
-        for (Dieta dieta: dietas){
+    public static void mostrarDietas(ArrayList<Dieta> dietas) {
+        for (Dieta dieta : dietas) {
             System.out.println("Código: " + dieta.getCodigo() + " Nombre: " + dieta.getNombre() + "\n" +
                     " |Desayuno: " + dieta.getDesayuno() + "\n" +
                     " |Comida: " + dieta.getComida() + "\n" +

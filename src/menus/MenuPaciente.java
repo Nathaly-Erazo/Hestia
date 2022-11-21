@@ -25,7 +25,6 @@ public class MenuPaciente {
                     5.-Volver a Menú Médico""");
 
             accion = sc.nextInt();
-
             switch (accion) {
                 case 1 -> {
                     System.out.println("AÑADIR PACIENTE");
@@ -45,9 +44,7 @@ public class MenuPaciente {
                     System.out.println("Número fuera de rango, vuelva a introducir un número: ");
                     menuPaciente(conn);
                 }
-
             }
-
             do {
                 System.out.println("¿Quiere hacer otra acción? 1.-Sí 2.-Volver a Menú Médico");
                 continuar = sc.nextInt();
@@ -60,7 +57,6 @@ public class MenuPaciente {
                     }
                 }
             } while (!seguir);
-
         } catch (InputMismatchException e) {
             System.out.println("Formato de número no válido");
             menuPaciente(conn);

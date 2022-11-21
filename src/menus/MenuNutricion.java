@@ -24,7 +24,6 @@ public class MenuNutricion {
                     5.-Salir de Hestia""");
 
             seccion = sc.nextInt();
-
             switch (seccion) {
                 case 1 -> {
                     System.out.println("HA INGRESADO A LA CONSULTA DE PACIENTES");
@@ -68,7 +67,6 @@ public class MenuNutricion {
                     }
                 }
             } while (!seguir);
-
         } catch (NumberFormatException e) {
             System.out.println("Formato de número no válido");
             menuNutricion(conn);

@@ -24,7 +24,6 @@ public class MenuDieta {
                     5.-Volver a Menú Cocina""");
 
             accion = sc.nextInt();
-
             switch (accion) {
                 case 1 -> {
                     System.out.println("AÑADIR DIETA");

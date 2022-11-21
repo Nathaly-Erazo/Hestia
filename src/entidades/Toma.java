@@ -28,8 +28,8 @@ public class Toma {
     }
 
     //Método para mostrar las tomas
-    public static void mostrarTomas (ArrayList<Toma> tomas){
-        for (Toma toma: tomas){
+    public static void mostrarTomas(ArrayList<Toma> tomas) {
+        for (Toma toma : tomas) {
             System.out.println("Código: " + toma.getCodigo() + " Nombre: " + toma.getNombre());
             System.out.println("-----------------------------------");
         }

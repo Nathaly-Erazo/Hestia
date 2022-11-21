@@ -16,7 +16,7 @@ public class MenuPrincipal {
                     3.-Cocina
                     4.-Salir de Hestia""");
             identificacion = sc.nextInt();
-
+            //Dependiendo de a qué departamento quiere acceder, marca una opción y le lleva al menú correspondiente
             switch (identificacion) {
                 case 1 -> {
                     System.out.println("DEPARTAMENTO MÉDICO");

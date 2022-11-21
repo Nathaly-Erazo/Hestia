@@ -23,6 +23,7 @@ public class JdbcToma {
         }
         return tomas;
     }
+
     public static void insertarToma(Connection conn) {
         try {
             Scanner sc = new Scanner(System.in);
@@ -32,7 +33,7 @@ public class JdbcToma {
                     1.-Insertar Toma\s
                     2.-Volver a Menú Nutrición""");
             int opcion = sc.nextInt();
-            switch (opcion){
+            switch (opcion) {
                 case 1 -> {
                     Toma toma = new Toma();
                     toma.recogerDatosToma();
@@ -70,6 +71,7 @@ public class JdbcToma {
             insertarToma(conn);
         }
     }
+
     public static void borrarToma(Connection conn) {
         try {
             Scanner sc = new Scanner(System.in);
@@ -79,12 +81,12 @@ public class JdbcToma {
                     2.-Volver a Menú Nutrición""");
             int opcion = sc.nextInt();
             boolean borrado = true;
-            switch (opcion){
+            switch (opcion) {
                 case 1 -> {
                     Toma.mostrarTomas(consultarToma(conn));
                     System.out.println("Introducir código de la toma que desea borrar: ");
                     int codigo = sc.nextInt();
-                    if (consultarSiExiste(conn,codigo) != 0){
+                    if (consultarSiExiste(conn, codigo) != 0) {
                         do {
                             System.out.println("¿Seguro que quiere borrar esta toma? 1.-Sí 2.-No");
                             int borrar = sc.nextInt();
@@ -123,6 +125,7 @@ public class JdbcToma {
             borrarToma(conn);
         }
     }
+
     public static void editarToma(Connection conn) {
         String query = "UPDATE toma SET nombre = ? WHERE codigo = ?";
         boolean edicion = true;
@@ -134,12 +137,12 @@ public class JdbcToma {
                     1.-Editar Toma\s
                     2.-Volver a Menú Nutrición""");
             int opcion = scInt.nextInt();
-            switch (opcion){
-                case 1->{
+            switch (opcion) {
+                case 1 -> {
                     Toma.mostrarTomas(consultarToma(conn));
                     System.out.println("Introducir código de la toma que desea editar: ");
                     int codigo = scInt.nextInt();
-                    if (consultarSiExiste(conn,codigo) != 0){
+                    if (consultarSiExiste(conn, codigo) != 0) {
                         System.out.println("Introduzca el nuevo nombre: ");
                         String nombre = scString.nextLine();
                         do {
@@ -180,12 +183,13 @@ public class JdbcToma {
             editarToma(conn);
         }
     }
+
     private static int consultarSiExiste(Connection conn, int codigo) throws SQLException {
         int resultado = 0;
         String query = "SELECT EXISTS (SELECT * FROM toma WHERE codigo=" + codigo + ") AS resultado";
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(query);
-        while (rs.next()){
+        while (rs.next()) {
             resultado = rs.getInt("resultado");
         }
         return resultado;

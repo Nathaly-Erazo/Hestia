@@ -73,7 +73,7 @@ public class JdbcPaciente {
         } catch (InputMismatchException e) {
             System.out.println("Formato de número no válido");
             insertarPaciente(conn);
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("El paciente ya existe");
             insertarPaciente(conn);
         } catch (Exception e) {
@@ -81,6 +81,7 @@ public class JdbcPaciente {
             insertarPaciente(conn);
         }
     }
+
     public static void borrarPaciente(Connection conn) {
         try {
             Scanner sc = new Scanner(System.in);
@@ -95,7 +96,7 @@ public class JdbcPaciente {
                     Paciente.mostrarPacientes(consultarPaciente(conn));
                     System.out.println("Introducir NHC del paciente que desea borrar: ");
                     int nhc = sc.nextInt();
-                    if (consultarSiExiste(conn,nhc) != 0){
+                    if (consultarSiExiste(conn, nhc) != 0) {
                         do {
                             System.out.println("¿Seguro que quiere borrar este registro? 1.-Sí 2.-No");
                             int borrar = sc.nextInt();
@@ -135,6 +136,7 @@ public class JdbcPaciente {
             borrarPaciente(conn);
         }
     }
+
     public static void editarPaciente(Connection conn) throws SQLException {
         String query = "UPDATE paciente SET ";
         boolean seguir = true;
@@ -153,14 +155,14 @@ public class JdbcPaciente {
                     Paciente.mostrarPacientes(JdbcPaciente.consultarPaciente(conn));
                     System.out.println("Introducir NHC del paciente que desea editar: ");
                     int nhc = scInt.nextInt();
-                    if (consultarSiExiste(conn,nhc) != 0){
+                    if (consultarSiExiste(conn, nhc) != 0) {
                         System.out.println("""
-                            ¿Qué campo quiere editar del paciente?:\s
-                            1.-Nombre\s
-                            2.-Apellidos\s
-                            3.-Observaciones\s
-                            4.-Habitación\s
-                            5.-Volver a Menú Médico""");
+                                ¿Qué campo quiere editar del paciente?:\s
+                                1.-Nombre\s
+                                2.-Apellidos\s
+                                3.-Observaciones\s
+                                4.-Habitación\s
+                                5.-Volver a Menú Médico""");
                         int campo = scInt.nextInt();
                         switch (campo) {
                             case 1 -> {
@@ -247,12 +249,13 @@ public class JdbcPaciente {
             editarPaciente(conn);
         }
     }
+
     private static int consultarSiExiste(Connection conn, int nhc) throws SQLException {
         int resultado = 0;
         String query = "SELECT EXISTS (SELECT * FROM paciente WHERE nhc=" + nhc + ") AS resultado";
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(query);
-        while (rs.next()){
+        while (rs.next()) {
             resultado = rs.getInt("resultado");
         }
         return resultado;

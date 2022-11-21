@@ -25,10 +25,10 @@ public class MenuMedico {
                     1.-Paciente\s
                     2.-Consultar Tomas\s
                     3.-Consultar Dietas\s
-                    4.-consultar Registros\s
+                    4.-Consultar Registros\s
                     5.-Salir de Hestia""");
 
-            seccion = sc.nextInt();
+            seccion = sc.nextInt(); //El usuario introduce el número de lo que quiere acceder
 
             switch (seccion) {
                 case 1 -> {
@@ -59,9 +59,8 @@ public class MenuMedico {
                     menuMedico(conn);
                 }
             }
-
             do {
-                System.out.println("¿Quiere hacer otra acción? 1.-Sí 2.-No");
+                System.out.println("¿Quiere hacer otra acción? 1.-Sí 2.-No"); //Deja al usuario volver al menú o no
                 continuar = sc.nextInt();
                 switch (continuar) {
                     case 1 -> menuMedico(conn);
@@ -75,7 +74,6 @@ public class MenuMedico {
                     }
                 }
             } while (!seguir);
-
         } catch (InputMismatchException e) {
             System.out.println("Formato de número no válido");
             menuMedico(conn);

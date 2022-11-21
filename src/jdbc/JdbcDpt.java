@@ -97,7 +97,7 @@ public class JdbcDpt {
                     Dieta.mostrarDietas(JdbcDieta.consultarDieta(conn));
                     System.out.println("Introducir código del registro que desea borrar: ");
                     int codigo = sc.nextInt();
-                    if (consultarSiExiste(conn,codigo) != 0){
+                    if (consultarSiExiste(conn, codigo) != 0) {
                         do {
                             System.out.println("¿Seguro que quiere borrar este resgistro? 1.-Sí 2.-No");
                             int borrar = sc.nextInt();
@@ -155,14 +155,14 @@ public class JdbcDpt {
                     Dpt.mostrarRegistros(JdbcDpt.consultarDpt(conn));
                     System.out.println("Introducir código del registro que desea editar: ");
                     int codigo = scInt.nextInt();
-                    if (consultarSiExiste(conn,codigo) != 0){
+                    if (consultarSiExiste(conn, codigo) != 0) {
                         System.out.println("""
-                            ¿Qué campo quiere editar del registro?:\s
-                            1.-Paciente\s
-                            2.-Dieta\s
-                            3.-Toma\s
-                            4.-Fecha\s
-                            5.-Volver a Menú Nutrición""");
+                                ¿Qué campo quiere editar del registro?:\s
+                                1.-Paciente\s
+                                2.-Dieta\s
+                                3.-Toma\s
+                                4.-Fecha\s
+                                5.-Volver a Menú Nutrición""");
                         int campo = scInt.nextInt();
                         switch (campo) {
                             case 1 -> {

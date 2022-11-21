@@ -28,7 +28,8 @@ public class JdbcDieta {
         }
         return dietas;
     }
-    public static void insertarDieta(Connection conn)  {
+
+    public static void insertarDieta(Connection conn) {
         try {
             Scanner sc = new Scanner(System.in);
             boolean insercion = true;
@@ -83,6 +84,7 @@ public class JdbcDieta {
             insertarDieta(conn);
         }
     }
+
     public static void borrarDieta(Connection conn) {
         try {
             Scanner sc = new Scanner(System.in);
@@ -97,7 +99,7 @@ public class JdbcDieta {
                     Dieta.mostrarDietas(consultarDieta(conn)); //Se muestran todas las dietas
                     System.out.println("Introduzca el código de la dieta que desea borrar: ");
                     int codigo = sc.nextInt();
-                    if (consultarSiExiste(conn,codigo) != 0){ //Se controla que la dieta exista
+                    if (consultarSiExiste(conn, codigo) != 0) { //Se controla que la dieta exista
                         do {
                             System.out.println("¿Seguro que quiere borrar esta dieta? 1.-Sí 2.-No");
                             int borrar = sc.nextInt();
@@ -137,6 +139,7 @@ public class JdbcDieta {
             borrarDieta(conn);
         }
     }
+
     public static void editarDieta(Connection conn) throws SQLException {
         String query = "UPDATE dieta SET "; //Se inicializa la query y luego se completará según el campo a editar
         boolean seguir = true; //Controlar que quiere seguir editando o no
@@ -155,15 +158,15 @@ public class JdbcDieta {
                     Dieta.mostrarDietas(JdbcDieta.consultarDieta(conn)); //Muestra todas las dietas
                     System.out.println("Introducir código de la dieta que desea editar: ");
                     int codigo = scInt.nextInt();
-                    if (consultarSiExiste(conn,codigo) != 0){ //Controlar que la dieta exista
+                    if (consultarSiExiste(conn, codigo) != 0) { //Controlar que la dieta exista
                         System.out.println("""
-                            ¿Qué campo quiere editar de la dieta?:\s
-                            1.-Nombre\s
-                            2.-Desayuno\s
-                            3.-Comida\s
-                            4.-Merienda\s
-                            5.-Cena\s
-                            6.-Volver a Menú Cocina""");
+                                ¿Qué campo quiere editar de la dieta?:\s
+                                1.-Nombre\s
+                                2.-Desayuno\s
+                                3.-Comida\s
+                                4.-Merienda\s
+                                5.-Cena\s
+                                6.-Volver a Menú Cocina""");
                         int campo = scInt.nextInt();
                         switch (campo) {
                             case 1 -> {
@@ -258,6 +261,7 @@ public class JdbcDieta {
             editarDieta(conn);
         }
     }
+
     private static int consultarSiExiste(Connection conn, int codigo) throws SQLException {
         //Esta clase sirve para comprobar si existe la dieta que se quiere borrar o editar
         int resultado = 0;
@@ -265,7 +269,7 @@ public class JdbcDieta {
         String query = "SELECT EXISTS (SELECT * FROM dieta WHERE codigo=" + codigo + ") AS resultado";
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(query);
-        while (rs.next()){
+        while (rs.next()) {
             resultado = rs.getInt("resultado");
         }
         return resultado;
