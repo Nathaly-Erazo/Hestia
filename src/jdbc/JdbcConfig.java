@@ -15,16 +15,13 @@ public class JdbcConfig {
 
             if (dbConnection != null) {
                 System.out.println("Conexión satisfactoria a la base de datos SQL: " + databaseUrl);
+                System.out.println();
             }
 
         } catch (SQLException e) {
-            System.out.println("Ha ocurrido un error mientras se hacía la conexión a la base de datos SQl");
+            System.err.println("Ha ocurrido un error mientras se hacía la conexión a la base de datos SQl");
             e.printStackTrace();
         }
-
         return dbConnection;
-
     }
-
-
 }

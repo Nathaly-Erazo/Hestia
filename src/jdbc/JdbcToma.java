@@ -12,6 +12,7 @@ public class JdbcToma {
     //En esta clase se encuentra lo relacionado con las consultas a la base de datos de la tabla toma
     //Tiene la misma estructura que la clase JdbcDieta
     public static ArrayList<Toma> consultarToma(Connection conn) throws SQLException {
+        System.out.println("────────── CONSULTA TOMA ──────────");
         ArrayList<Toma> tomas = new ArrayList<>();
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM toma");
@@ -27,11 +28,15 @@ public class JdbcToma {
     public static void insertarToma(Connection conn) {
         try {
             Scanner sc = new Scanner(System.in);
-            boolean inserccion = true;
+            boolean insercion = true;
+            System.out.println("───────── AÑADIR TOMA ─────────");
             System.out.println("""
-                    ELIJA UNA OPCIÓN:\s
-                    1.-Insertar Toma\s
-                    2.-Volver a Menú Nutrición""");
+                    ┌───────────────────────────────┐\s
+                    │  Elija una opción:            │\s
+                    │    1.-Insertar Toma           │\s
+                    │    2.-Volver a Menú Nutrición │\s
+                    └───────────────────────────────┘\s
+                     """);
             int opcion = sc.nextInt();
             switch (opcion) {
                 case 1 -> {
@@ -47,27 +52,27 @@ public class JdbcToma {
                         switch (insertar) {
                             case 1 -> {
                                 preparedStmt.execute();
-                                System.out.println("TOMA INTRODUCIDA");
+                                System.out.println("✓✓✓ TOMA INTRODUCIDA ✓✓✓");
                             }
-                            case 2 -> MenuNutricion.menuNutricion(conn);
+                            case 2 -> insertarToma(conn);
                             default -> {
-                                System.out.println("Número fuera de rango. Vuelva a intoducirlo");
-                                inserccion = false;
+                                System.err.println("Número fuera de rango. Vuelva a intoducirlo");
+                                insercion = false;
                             }
                         }
-                    } while (!inserccion);
+                    } while (!insercion);
                 }
                 case 2 -> MenuNutricion.menuNutricion(conn);
                 default -> {
-                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                     insertarToma(conn);
                 }
             }
         } catch (InputMismatchException e) {
-            System.out.println("Formato de número no válido");
+            System.err.println("Formato de número no válido");
             insertarToma(conn);
         } catch (Exception e) {
-            System.out.println("Error indeterminado");
+            System.err.println("Error indeterminado");
             insertarToma(conn);
         }
     }
@@ -75,10 +80,14 @@ public class JdbcToma {
     public static void borrarToma(Connection conn) {
         try {
             Scanner sc = new Scanner(System.in);
+            System.out.println("────────── BORRAR TOMA ─────────");
             System.out.println("""
-                    ELIJA UNA OPCIÓN:\s
-                    1.-Borrar Toma\s
-                    2.-Volver a Menú Nutrición""");
+                    ┌───────────────────────────────┐\s
+                    │  Elija una opción:            │\s
+                    │    1.-Borrar Toma             │\s
+                    │    2.-Volver a Menú Nutrición │\s
+                    └───────────────────────────────┘\s
+                     """);
             int opcion = sc.nextInt();
             boolean borrado = true;
             switch (opcion) {
@@ -97,31 +106,31 @@ public class JdbcToma {
                                     preparedStmt.setInt(1, codigo);
 
                                     preparedStmt.execute();
-                                    System.out.println("TOMA BORRADA");
+                                    System.out.println("✓✓✓ TOMA BORRADA ✓✓✓");
                                 }
-                                case 2 -> MenuNutricion.menuNutricion(conn);
+                                case 2 -> borrarToma(conn);
                                 default -> {
-                                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                                     borrado = false;
                                 }
                             }
                         } while (!borrado);
                     } else {
-                        System.out.println("La toma no existe");
+                        System.err.println("La toma no existe");
                         borrarToma(conn);
                     }
                 }
                 case 2 -> MenuNutricion.menuNutricion(conn);
                 default -> {
-                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                     borrarToma(conn);
                 }
             }
         } catch (InputMismatchException e) {
-            System.out.println("Formato de número no válido");
+            System.err.println("Formato de número no válido");
             borrarToma(conn);
         } catch (Exception e) {
-            System.out.println("Error indeterminado");
+            System.err.println("Error indeterminado");
             borrarToma(conn);
         }
     }
@@ -132,10 +141,14 @@ public class JdbcToma {
         Scanner scInt = new Scanner(System.in);
         Scanner scString = new Scanner(System.in);
         try {
+            System.out.println("───────── EDITAR TOMA ───────── ");
             System.out.println("""
-                    ELIJA UNA OPCIÓN:\s
-                    1.-Editar Toma\s
-                    2.-Volver a Menú Nutrición""");
+                    ┌───────────────────────────────┐\s
+                    │  Elija una opción:            │\s
+                    │    1.-Editar Toma             │\s
+                    │    2.-Volver a Menú Nutrición │\s
+                    └───────────────────────────────┘\s
+                     """);
             int opcion = scInt.nextInt();
             switch (opcion) {
                 case 1 -> {
@@ -155,31 +168,31 @@ public class JdbcToma {
                                     preparedStmt.setInt(2, codigo);
 
                                     preparedStmt.execute();
-                                    System.out.println("TOMA EDITADA");
+                                    System.out.println("✓✓✓ TOMA EDITADA ✓✓✓");
                                 }
-                                case 2 -> MenuNutricion.menuNutricion(conn);
+                                case 2 -> editarToma(conn);
                                 default -> {
-                                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                                     edicion = false;
                                 }
                             }
                         } while (!edicion);
                     } else {
-                        System.out.println("La toma no existe");
+                        System.err.println("La toma no existe");
                         editarToma(conn);
                     }
                 }
                 case 2 -> MenuNutricion.menuNutricion(conn);
                 default -> {
-                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                     editarToma(conn);
                 }
             }
         } catch (InputMismatchException e) {
-            System.out.println("Formato de número no válido");
+            System.err.println("Formato de número no válido");
             editarToma(conn);
         } catch (Exception e) {
-            System.out.println("Error indeterminado");
+            System.err.println("Error indeterminado");
             editarToma(conn);
         }
     }

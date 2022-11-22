@@ -14,48 +14,36 @@ import java.util.Scanner;
 
 public class MenuMedico {
     public static void menuMedico(Connection conn) {
+        //Clase correspondiente al menú del departamento médico
         Scanner sc = new Scanner(System.in);
-        boolean seguir = true;
+        boolean seguir = true; //Controlar que quiera seguir en este menú
         int seccion;
         int continuar;
-
         try {
+            MenuPrincipal.espacios(); //Llamada al método para crear espacios
+            System.out.println("───────────── DEPARTAMENTO MÉDICO ─────────────");
             System.out.println("""
-                    Indique a qué sección quiere acceder:\s
-                    1.-Paciente\s
-                    2.-Consultar Tomas\s
-                    3.-Consultar Dietas\s
-                    4.-Consultar Registros\s
-                    5.-Salir de Hestia""");
-
+                    ┌──────────────────────────────────────────────┐\s
+                    │  Indique a qué sección quiere acceder:       │\s
+                    │    1.-Paciente                               │\s
+                    │    2.-Consultar Tomas                        │\s
+                    │    3.-Consultar Dietas                       │\s
+                    │    4.-Consultar Registros                    │\s
+                    │    5.-Salir de Hestia                        │\s
+                    └──────────────────────────────────────────────┘\s
+                     """);
             seccion = sc.nextInt(); //El usuario introduce el número de lo que quiere acceder
-
             switch (seccion) {
-                case 1 -> {
-                    System.out.println("HA INGRESADO A LA SECCION PACIENTE");
-                    MenuPaciente.menuPaciente(conn);
-                }
-                case 2 -> {
-                    System.out.println("HA INGRESADO A LA CONSULTA DE TOMAS");
-                    System.out.println("-----------------------------------");
-                    Toma.mostrarTomas(JdbcToma.consultarToma(conn));
-                }
-                case 3 -> {
-                    System.out.println("HA INGRESADO A LA CONSULTA DE DIETAS");
-                    System.out.println("-----------------------------------");
-                    Dieta.mostrarDietas(JdbcDieta.consultarDieta(conn));
-                }
-                case 4 -> {
-                    System.out.println("HA INGRESADO A LA CONSULTA DE LOS REGISTROS");
-                    System.out.println("-----------------------------------");
-                    Dpt.mostrarRegistros(JdbcDpt.consultarDpt(conn));
-                }
+                case 1 -> MenuPaciente.menuPaciente(conn);
+                case 2 -> Toma.mostrarTomas(JdbcToma.consultarToma(conn));
+                case 3 -> Dieta.mostrarDietas(JdbcDieta.consultarDieta(conn));
+                case 4 -> Dpt.mostrarRegistros(JdbcDpt.consultarDpt(conn));
                 case 5 -> {
-                    System.out.println("HASTA PRONTO");
+                    System.out.println("════════════ HASTA PRONTO ════════════");
                     System.exit(0);
                 }
                 default -> {
-                    System.out.println("Número fuera de rango, vuelva a introducir un número: ");
+                    System.err.println("Número fuera de rango, vuelva a introducir un número: ");
                     menuMedico(conn);
                 }
             }
@@ -65,20 +53,20 @@ public class MenuMedico {
                 switch (continuar) {
                     case 1 -> menuMedico(conn);
                     case 2 -> {
-                        System.out.println("HASTA PRONTO");
+                        System.out.println("════════════ HASTA PRONTO ════════════");
                         System.exit(0);
                     }
                     default -> {
-                        System.out.println("Número no válido, Vuelva a intoducirlo");
+                        System.err.println("Número no válido, Vuelva a intoducirlo");
                         seguir = false;
                     }
                 }
             } while (!seguir);
         } catch (InputMismatchException e) {
-            System.out.println("Formato de número no válido");
+            System.err.println("Formato de número no válido");
             menuMedico(conn);
         } catch (Exception e) {
-            System.out.println("Error indeterminado");
+            System.err.println("Error indeterminado");
             menuMedico(conn);
         }
     }

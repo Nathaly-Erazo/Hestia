@@ -66,6 +66,8 @@ public class Dieta {
 
     //Método para mostar los datos de la tabla Dieta
     public static void mostrarDietas(ArrayList<Dieta> dietas) {
+        //For each, funciona como un for normal, pero asignando cada uno de los elementos de la lista a una
+        //variable u objeto, dependiendo del tipo del que sea el array
         for (Dieta dieta : dietas) {
             System.out.println("Código: " + dieta.getCodigo() + " Nombre: " + dieta.getNombre() + "\n" +
                     " |Desayuno: " + dieta.getDesayuno() + "\n" +
@@ -74,13 +76,13 @@ public class Dieta {
                     " |Cena: " + dieta.getCena());
             System.out.println("-----------------------------------");
         }
+        System.out.println("───────────────────────────────────");
     }
 
     //Método para recoger los datos de la dieta que se quiere guardar
     public void recogerDatosDieta() {
         Scanner scString = new Scanner(System.in);
-
-        System.out.println("DATOS DE LA DIETA");
+        System.out.println("─────── DATOS DE LA DIETA  ───────");
         System.out.println("Nombre: ");
         this.setNombre(scString.nextLine());
         System.out.println("Desayuno: ");
@@ -91,6 +93,7 @@ public class Dieta {
         this.setMerienda(scString.nextLine());
         System.out.println("Cena: ");
         this.setCena(scString.nextLine());
+        System.out.println("──────────────────────────────────");
     }
 
 }

@@ -14,11 +14,14 @@ public class Main {
         info.put("user", "root");
         info.put("password", "");
 
-        //Se llama al JdbcConfig para hacer la conexión
+        //Se llama a la clase JdbcConfig para hacer la conexión
         Connection dbConnection = JdbcConfig.getConnection(databaseUrl, info);
 
-        System.out.println("BIENVENIDO/A A HESTIA");
-        //Le lleva al usuario al menú principal y al sistema
-        MenuPrincipal.menuPrincipal(dbConnection);
+        //Si la conexión se ha realizado, entrará en en el sistema
+        if (dbConnection != null){
+            System.out.println("════════════ BIENVENIDO/A A HESTIA ════════════");
+            //Le lleva al usuario al menú principal y al sistema
+            MenuPrincipal.menuPrincipal(dbConnection);
+        }
     }
 }

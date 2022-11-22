@@ -2,6 +2,7 @@ package jdbc;
 
 import entidades.Paciente;
 import menus.MenuMedico;
+import menus.MenuPaciente;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class JdbcPaciente {
     //En esta clase se encuentra lo relacionado con la consulta en la base de datos de la tabla paciente
     //Tiene la misma estructura que la clase JdbcDieta
     public static ArrayList<Paciente> consultarPaciente(Connection conn) throws SQLException {
+        System.out.println("─────── CONSULTA PACIENTES ────────");
         ArrayList<Paciente> pacientes = new ArrayList<>();
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM paciente");
@@ -31,11 +33,15 @@ public class JdbcPaciente {
     public static void insertarPaciente(Connection conn) {
         try {
             Scanner sc = new Scanner(System.in);
-            boolean inserccion = true;
+            boolean insercion = true;
+            System.out.println("─────── AÑADIR PACIENTE ───────");
             System.out.println("""
-                    ELIJA UNA OPCIÓN:\s
-                    1.-Insertar Paciente\s
-                    2.-Volver a Menú Médico""");
+                    ┌───────────────────────────────┐\s
+                    │  Elija una opción:            │\s
+                    │    1.-Insertar Paciente       │\s
+                    │    2.-Volver a Menú Médico    │\s
+                    └───────────────────────────────┘\s
+                     """);
             int opcion = sc.nextInt();
             switch (opcion) {
                 case 1 -> {
@@ -54,30 +60,30 @@ public class JdbcPaciente {
                         switch (insertar) {
                             case 1 -> {
                                 preparedStmt.execute();
-                                System.out.println("PACIENTE INTRODUCIDO");
+                                System.out.println("✓✓✓ PACIENTE INTRODUCIDO ✓✓✓");
                             }
-                            case 2 -> MenuMedico.menuMedico(conn);
+                            case 2 -> insertarPaciente(conn);
                             default -> {
-                                System.out.println("Número fuera de rango. Vuelva a intoducirlo");
-                                inserccion = false;
+                                System.err.println("Número fuera de rango. Vuelva a intoducirlo");
+                                insercion = false;
                             }
                         }
-                    } while (!inserccion);
+                    } while (!insercion);
                 }
                 case 2 -> MenuMedico.menuMedico(conn);
                 default -> {
-                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                     insertarPaciente(conn);
                 }
             }
         } catch (InputMismatchException e) {
-            System.out.println("Formato de número no válido");
+            System.err.println("Formato de número no válido");
             insertarPaciente(conn);
         } catch (SQLException e) {
-            System.out.println("El paciente ya existe");
+            System.err.println("El paciente ya existe");
             insertarPaciente(conn);
         } catch (Exception e) {
-            System.out.println("Error indeterminado");
+            System.err.println("Error indeterminado");
             insertarPaciente(conn);
         }
     }
@@ -85,10 +91,14 @@ public class JdbcPaciente {
     public static void borrarPaciente(Connection conn) {
         try {
             Scanner sc = new Scanner(System.in);
+            System.out.println("─────── BORRAR PACIENTE ─────── ");
             System.out.println("""
-                    ELIJA UNA OPCIÓN:\s
-                    1.-Borrar Paciente\s
-                    2.-Volver a Menú Médico""");
+                    ┌───────────────────────────────┐\s
+                    │  Elija una opción:            │\s
+                    │    1.-Borrar Paciente         │\s
+                    │    2.-Volver a Menú Médico    │\s
+                    └───────────────────────────────┘\s
+                     """);
             int opcion = sc.nextInt();
             boolean borrado = true;
             switch (opcion) {
@@ -98,7 +108,7 @@ public class JdbcPaciente {
                     int nhc = sc.nextInt();
                     if (consultarSiExiste(conn, nhc) != 0) {
                         do {
-                            System.out.println("¿Seguro que quiere borrar este registro? 1.-Sí 2.-No");
+                            System.out.println("¿Seguro que quiere borrar este paciente? 1.-Sí 2.-No");
                             int borrar = sc.nextInt();
                             switch (borrar) {
                                 case 1 -> {
@@ -107,32 +117,31 @@ public class JdbcPaciente {
                                     preparedStmt.setInt(1, nhc);
 
                                     preparedStmt.execute();
-                                    System.out.println("PACIENTE BORRADO");
+                                    System.out.println("✓✓✓ PACIENTE BORRADO ✓✓✓");
                                 }
                                 case 2 -> borrarPaciente(conn);
                                 default -> {
-                                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                                     borrado = false;
                                 }
                             }
                         } while (!borrado);
-
                     } else {
-                        System.out.println("El paciente no existe");
+                        System.err.println("El paciente no existe");
                         borrarPaciente(conn);
                     }
                 }
                 case 2 -> MenuMedico.menuMedico(conn);
                 default -> {
-                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                     borrarPaciente(conn);
                 }
             }
         } catch (InputMismatchException e) {
-            System.out.println("Formato de número no válido");
+            System.err.println("Formato de número no válido");
             borrarPaciente(conn);
         } catch (Exception e) {
-            System.out.println("Error indeterminado");
+            System.err.println("Error indeterminado");
             borrarPaciente(conn);
         }
     }
@@ -145,10 +154,14 @@ public class JdbcPaciente {
         Scanner scString = new Scanner(System.in);
         PreparedStatement preparedStmt = conn.prepareStatement(query);
         try {
+            System.out.println("─────── EDITAR PACIENTE ─────── ");
             System.out.println("""
-                    ELIJA UNA OPCIÓN:\s
-                    1.-Editar Paciente\s
-                    2.-Volver a Menú Médico""");
+                    ┌───────────────────────────────┐\s
+                    │  Elija una opción:            │\s
+                    │    1.-Editar Paciente         │\s
+                    │    2.-Volver a Menú Médico    │\s
+                    └───────────────────────────────┘\s
+                     """);
             int opcion = scInt.nextInt();
             switch (opcion) {
                 case 1 -> {
@@ -157,12 +170,15 @@ public class JdbcPaciente {
                     int nhc = scInt.nextInt();
                     if (consultarSiExiste(conn, nhc) != 0) {
                         System.out.println("""
-                                ¿Qué campo quiere editar del paciente?:\s
-                                1.-Nombre\s
-                                2.-Apellidos\s
-                                3.-Observaciones\s
-                                4.-Habitación\s
-                                5.-Volver a Menú Médico""");
+                                ┌─────────────────────────────────────────────┐\s
+                                │  ¿Qué campo quiere editar del paciente?:    │\s
+                                │    1.-Nombre                                │\s
+                                │    2.-Apellidos                             │\s
+                                │    3.-Observaciones                         │\s
+                                │    4.-Habitación                            │\s
+                                │    5.-Volver a Menú Paciente                │\s
+                                └─────────────────────────────────────────────┘\s
+                                  """);
                         int campo = scInt.nextInt();
                         switch (campo) {
                             case 1 -> {
@@ -197,9 +213,9 @@ public class JdbcPaciente {
                                 preparedStmt.setString(1, habitacion);
                                 preparedStmt.setInt(2, nhc);
                             }
-                            case 5 -> MenuMedico.menuMedico(conn);
+                            case 5 -> MenuPaciente.menuPaciente(conn);
                             default -> {
-                                System.out.println("Número fuera de rango. vuelva a introducir un número: ");
+                                System.err.println("Número fuera de rango. vuelva a introducir un número: ");
                                 editarPaciente(conn);
                             }
                         }
@@ -209,11 +225,11 @@ public class JdbcPaciente {
                             switch (editar) {
                                 case 1 -> {
                                     preparedStmt.execute();
-                                    System.out.println("PACIENTE EDITADO");
+                                    System.out.println("✓✓✓ PACIENTE EDITADO ✓✓✓");
                                 }
-                                case 2 -> MenuMedico.menuMedico(conn);
+                                case 2 -> editarPaciente(conn);
                                 default -> {
-                                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                                     edicion = false;
                                 }
                             }
@@ -225,27 +241,27 @@ public class JdbcPaciente {
                                 case 1 -> editarPaciente(conn);
                                 case 2 -> MenuMedico.menuMedico(conn);
                                 default -> {
-                                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                                     seguir = false;
                                 }
                             }
                         } while (!seguir);
                     } else {
-                        System.out.println("El paciente no existe");
+                        System.err.println("El paciente no existe");
                         editarPaciente(conn);
                     }
                 }
                 case 2 -> MenuMedico.menuMedico(conn);
                 default -> {
-                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                     editarPaciente(conn);
                 }
             }
         } catch (InputMismatchException e) {
-            System.out.println("Formato de número no válido");
+            System.err.println("Formato de número no válido");
             editarPaciente(conn);
         } catch (Exception e) {
-            System.out.println("Error indeterminado");
+            System.err.println("Error indeterminado");
             editarPaciente(conn);
         }
     }

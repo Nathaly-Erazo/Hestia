@@ -57,18 +57,18 @@ public class Paciente {
     //Método para mostar los datos de la tabla pacientes
     public static void mostrarPacientes(ArrayList<Paciente> pacientes) {
         for (Paciente paciente : pacientes) {
-            System.out.println("Nombre: " + paciente.getNombre() + " |Apellidos: " + paciente.getApellidos() +
-                    " |NHC: " + paciente.getNhc() + " |Observaciones: " + paciente.getObservaciones() + " |Habitación: " + paciente.getHabitacion());
+            System.out.println("NHC: " + paciente.getNhc() + " |Nombre: " + paciente.getNombre() + " |Apellidos: " + paciente.getApellidos() +
+                     " |Observaciones: " + paciente.getObservaciones() + " |Habitación: " + paciente.getHabitacion());
             System.out.println("-----------------------------------");
         }
+        System.out.println("───────────────────────────────────");
     }
 
     // En el siguiente método se recogerán los datos
     public void recogerDatosPaciente() {
         Scanner scInt = new Scanner(System.in);
         Scanner scString = new Scanner(System.in);
-
-        System.out.println("DATOS DEL PACIENTE");
+        System.out.println("─────── DATOS DEL PACIENTE ───────");
         System.out.println("NHC: ");
         this.setNhc(scInt.nextInt());
         System.out.println("Nombre: ");
@@ -79,5 +79,6 @@ public class Paciente {
         this.setObservaciones(scString.nextLine());
         System.out.println("Habitación: ");
         this.setHabitacion(scInt.nextInt());
+        System.out.println("──────────────────────────────────");
     }
 }

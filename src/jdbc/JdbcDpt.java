@@ -5,6 +5,7 @@ import entidades.Dpt;
 import menus.MenuNutricion;
 
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -13,7 +14,8 @@ import java.util.Scanner;
 public class JdbcDpt {
     //En esta clase se encuentra lo relaconado con las consultas a la base de datos de la tabla dieta_paciente_toma
     //Tiene la misma estructura que la clase JdbcDieta
-    public static ArrayList<Dpt> consultarDpt(Connection conn) throws SQLException {
+    public static ArrayList<Dpt> consultarDpt(Connection conn) throws SQLException, ParseException {
+        System.out.println("─────── CONSULTA REGISTROS ────────");
         ArrayList<Dpt> registros = new ArrayList<>();
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM dieta_paciente_toma");
@@ -31,13 +33,18 @@ public class JdbcDpt {
     }
 
     public static void insertarRegistro(Connection conn) {
+
         try {
             Scanner sc = new Scanner(System.in);
             boolean insercion = true;
+            System.out.println("─────── AÑADIR REGISTRO ───────");
             System.out.println("""
-                    ELIJA UNA OPCIÓN:\s
-                    1.-Insertar Registro\s
-                    2.-Volver a Menú Nutrición""");
+                    ┌───────────────────────────────┐\s
+                    │  Elija una opción:            │\s
+                    │    1.-Insertar registro       │\s
+                    │    2.-Volver a Menú Nutrición │\s
+                    └───────────────────────────────┘\s
+                     """);
             int opcion = sc.nextInt();
             switch (opcion) {
                 case 1 -> {
@@ -56,11 +63,11 @@ public class JdbcDpt {
                         switch (insertar) {
                             case 1 -> {
                                 preparedStmt.execute();
-                                System.out.println("REGISTRO INTRODUCIDO");
+                                System.out.println("✓✓✓ REGISTRO INTRODUCIDO ✓✓✓");
                             }
-                            case 2 -> MenuNutricion.menuNutricion(conn);
+                            case 2 -> insertarRegistro(conn);
                             default -> {
-                                System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                                System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                                 insercion = false;
                             }
                         }
@@ -68,33 +75,35 @@ public class JdbcDpt {
                 }
                 case 2 -> MenuNutricion.menuNutricion(conn);
                 default -> {
-                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                     insertarRegistro(conn);
                 }
             }
         } catch (InputMismatchException e) {
-            System.out.println("Formato de número no válido");
+            System.err.println("Formato de número no válido");
             insertarRegistro(conn);
         } catch (Exception e) {
-            System.out.println("Error indeterminado");
+            System.err.println("Formato o valor no válido");
             insertarRegistro(conn);
         }
-
-
     }
 
     public static void borrarRegistro(Connection conn) {
         try {
             Scanner sc = new Scanner(System.in);
+            System.out.println("─────── BORRAR REGISTRO ─────── ");
             System.out.println("""
-                    ELIJA UNA OPCIÓN:\s
-                    1.-Borrar Registro\s
-                    2.-Volver a Menú Nutrición""");
+                    ┌───────────────────────────────┐\s
+                    │  Elija una opción:            │\s
+                    │    1.-Borrar Registro         │\s
+                    │    2.-Volver a Menú Nutrición │\s
+                    └───────────────────────────────┘\s
+                     """);
             int opcion = sc.nextInt();
             boolean borrado = true;
             switch (opcion) {
                 case 1 -> {
-                    Dieta.mostrarDietas(JdbcDieta.consultarDieta(conn));
+                    Dpt.mostrarRegistros(JdbcDpt.consultarDpt(conn));
                     System.out.println("Introducir código del registro que desea borrar: ");
                     int codigo = sc.nextInt();
                     if (consultarSiExiste(conn, codigo) != 0) {
@@ -108,31 +117,31 @@ public class JdbcDpt {
                                     preparedStmt.setInt(1, codigo);
 
                                     preparedStmt.execute();
-                                    System.out.println("REGISTRO BORRADO");
+                                    System.out.println("✓✓✓ REGISTRO BORRADO ✓✓✓");
                                 }
-                                case 2 -> MenuNutricion.menuNutricion(conn);
+                                case 2 -> borrarRegistro(conn);
                                 default -> {
-                                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                                     borrado = false;
                                 }
                             }
                         } while (!borrado);
                     } else {
-                        System.out.println("El registro no existe");
+                        System.err.println("El registro no existe");
                         borrarRegistro(conn);
                     }
                 }
                 case 2 -> MenuNutricion.menuNutricion(conn);
                 default -> {
-                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                     borrarRegistro(conn);
                 }
             }
         } catch (InputMismatchException e) {
-            System.out.println("Formato de número no válido");
+            System.err.println("Formato de número no válido");
             borrarRegistro(conn);
         } catch (Exception e) {
-            System.out.println("Error indeterminado");
+            System.err.println("Error indeterminado");
             borrarRegistro(conn);
         }
     }
@@ -145,10 +154,14 @@ public class JdbcDpt {
         Scanner scString = new Scanner(System.in);
         PreparedStatement preparedStmt = conn.prepareStatement(query);
         try {
+            System.out.println("─────── EDITAR REGISTRO ─────── ");
             System.out.println("""
-                    ELIJA UNA OPCIÓN:\s
-                    1.-Editar Registro\s
-                    2.-Volver a Menú Nutrición""");
+                    ┌───────────────────────────────┐\s
+                    │  Elija una opción:            │\s
+                    │    1.-Editar Registro         │\s
+                    │    2.-Volver a Menú Nutrición │\s
+                    └───────────────────────────────┘\s
+                     """);
             int opcion = scInt.nextInt();
             switch (opcion) {
                 case 1 -> {
@@ -157,12 +170,15 @@ public class JdbcDpt {
                     int codigo = scInt.nextInt();
                     if (consultarSiExiste(conn, codigo) != 0) {
                         System.out.println("""
-                                ¿Qué campo quiere editar del registro?:\s
-                                1.-Paciente\s
-                                2.-Dieta\s
-                                3.-Toma\s
-                                4.-Fecha\s
-                                5.-Volver a Menú Nutrición""");
+                                ┌─────────────────────────────────────────────┐\s
+                                │  ¿Qué campo quiere editar del registro?:    │\s
+                                │    1.-Paciente                              │\s
+                                │    2.-Dieta                                 │\s
+                                │    3.-Toma                                  │\s
+                                │    4.-Fecha                                 │\s
+                                │    5.-Volver a Menú Nutrición               │\s
+                                └─────────────────────────────────────────────┘\s
+                                  """);
                         int campo = scInt.nextInt();
                         switch (campo) {
                             case 1 -> {
@@ -199,7 +215,7 @@ public class JdbcDpt {
                             }
                             case 5 -> MenuNutricion.menuNutricion(conn);
                             default -> {
-                                System.out.println("Número fuera de rango, vuelva a introducir un número: ");
+                                System.err.println("Número fuera de rango, vuelva a introducir un número: ");
                                 editarRegistro(conn);
                             }
                         }
@@ -209,11 +225,11 @@ public class JdbcDpt {
                             switch (editar) {
                                 case 1 -> {
                                     preparedStmt.execute();
-                                    System.out.println("REGISTRO EDITADO");
+                                    System.out.println("✓✓✓ REGISTRO EDITADO ✓✓✓");
                                 }
-                                case 2 -> MenuNutricion.menuNutricion(conn);
+                                case 2 -> editarRegistro(conn);
                                 default -> {
-                                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                                     edicion = false;
                                 }
                             }
@@ -225,27 +241,27 @@ public class JdbcDpt {
                                 case 1 -> editarRegistro(conn);
                                 case 2 -> MenuNutricion.menuNutricion(conn);
                                 default -> {
-                                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                                     seguir = false;
                                 }
                             }
                         } while (!seguir);
                     } else {
-                        System.out.println("El registro no existe");
+                        System.err.println("El registro no existe");
                         editarRegistro(conn);
                     }
                 }
                 case 2 -> MenuNutricion.menuNutricion(conn);
                 default -> {
-                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                     editarRegistro(conn);
                 }
             }
         } catch (InputMismatchException e) {
-            System.out.println("Formato de número no válido");
+            System.err.println("Formato de número no válido");
             editarRegistro(conn);
         } catch (Exception e) {
-            System.out.println("Error indeterminado");
+            System.err.println("Error indeterminado");
             editarRegistro(conn);
         }
     }

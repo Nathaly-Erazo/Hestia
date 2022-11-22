@@ -11,44 +11,36 @@ import java.util.Scanner;
 
 public class MenuNutricion {
     public static void menuNutricion(Connection conn) {
+        //Clase correspondiente al menú del departamento nutrición
+        //Tiene la misma estructura que la clase MenuMedico
         Scanner sc = new Scanner(System.in);
         boolean seguir = true;
         int seccion;
         try {
+            MenuPrincipal.espacios();
+            System.out.println("───────────── DEPARTAMENTO NUTRICIÓN ──────────");
             System.out.println("""
-                    Indique a qué sección quiere acceder:\s
-                    1.-Consultar Pacientes\s
-                    2.-Consultar Dietas\s
-                    3.-Toma\s
-                    4.-Registro\s
-                    5.-Salir de Hestia""");
-
+                    ┌──────────────────────────────────────────────┐\s
+                    │  Indique a qué sección quiere acceder:       │\s
+                    │    1.-Consultar Pacientes                    │\s
+                    │    2.-Consultar Dietas                       │\s
+                    │    3.-Toma                                   │\s
+                    │    4.-Registro                               │\s
+                    │    5.-Salir de Hestia                        │\s
+                    └──────────────────────────────────────────────┘\s
+                     """);
             seccion = sc.nextInt();
             switch (seccion) {
-                case 1 -> {
-                    System.out.println("HA INGRESADO A LA CONSULTA DE PACIENTES");
-                    System.out.println("-----------------------------------");
-                    Paciente.mostrarPacientes(JdbcPaciente.consultarPaciente(conn));
-                }
-                case 2 -> {
-                    System.out.println("HA INGRESADO A LA CONSULTA DE DIETAS");
-                    System.out.println("-----------------------------------");
-                    Dieta.mostrarDietas(JdbcDieta.consultarDieta(conn));
-                }
-                case 3 -> {
-                    System.out.println("HA INGRESADO A LA SECCIÓN TOMAS");
-                    MenuToma.menuToma(conn);
-                }
-                case 4 -> {
-                    System.out.println("HA INGRESADO A LA SECCIÓN REGISTRO");
-                    MenuDpt.menuDpt(conn);
-                }
+                case 1 -> Paciente.mostrarPacientes(JdbcPaciente.consultarPaciente(conn));
+                case 2 -> Dieta.mostrarDietas(JdbcDieta.consultarDieta(conn));
+                case 3 -> MenuToma.menuToma(conn);
+                case 4 -> MenuDpt.menuDpt(conn);
                 case 5 -> {
-                    System.out.println("HASTA PRONTO");
+                    System.out.println("════════════ HASTA PRONTO ════════════");
                     System.exit(0);
                 }
                 default -> {
-                    System.out.println("Número fuera de rango, vuelva a introducir un número: ");
+                    System.err.println("Número fuera de rango, vuelva a introducir un número: ");
                     menuNutricion(conn);
                 }
             }
@@ -58,20 +50,20 @@ public class MenuNutricion {
                 switch (continuar) {
                     case 1 -> menuNutricion(conn);
                     case 2 -> {
-                        System.out.println("HASTA PRONTO");
+                        System.out.println("════════════ HASTA PRONTO ════════════");
                         System.exit(0);
                     }
                     default -> {
-                        System.out.println("Número no válido, Vuelva a intoducirlo");
+                        System.err.println("Número no válido, Vuelva a intoducirlo");
                         seguir = false;
                     }
                 }
             } while (!seguir);
         } catch (NumberFormatException e) {
-            System.out.println("Formato de número no válido");
+            System.err.println("Formato de número no válido");
             menuNutricion(conn);
         } catch (Exception e) {
-            System.out.println("Error indeterminado");
+            System.err.println("Error indeterminado");
             menuNutricion(conn);
         }
     }

@@ -33,14 +33,15 @@ public class Toma {
             System.out.println("Código: " + toma.getCodigo() + " Nombre: " + toma.getNombre());
             System.out.println("-----------------------------------");
         }
+        System.out.println("───────────────────────────────────");
     }
 
     //Método para recoger los datos de la toma.
     public void recogerDatosToma() {
         Scanner scString = new Scanner(System.in);
-
-        System.out.println("DATOS DE LA TOMA");
+        System.out.println("─────── DATOS DE LA TOMA ───────");
         System.out.println("Nombre: ");
         this.setNombre(scString.nextLine());
+        System.out.println("────────────────────────────────");
     }
 }

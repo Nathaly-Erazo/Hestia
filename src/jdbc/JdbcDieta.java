@@ -2,6 +2,7 @@ package jdbc;
 
 import entidades.Dieta;
 import menus.MenuCocina;
+import menus.MenuDieta;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.Scanner;
 public class JdbcDieta {
     //En esta clase se encuentra lo relacionado con las consultas a la base de datos de la tabla dieta
     public static ArrayList<Dieta> consultarDieta(Connection conn) throws SQLException {
+        System.out.println("───────── CONSULTA DIETAS ─────────");
         //Se crea el método  de tipo array ya que son campos de diferente tipo
         ArrayList<Dieta> dietas = new ArrayList<>();
         Statement stmt = conn.createStatement(); //Objeto que sale de la conexion y se utiliza para declarar la consulta
@@ -33,11 +35,15 @@ public class JdbcDieta {
         try {
             Scanner sc = new Scanner(System.in);
             boolean insercion = true;
+            System.out.println("───────── AÑADIR DIETA ────────");
             //Se le da la opción al usuario de volver al menú anterioir por si se hubiera confudido
-            System.out.println(""" 
-                    ELIJA UNA OPCIÓN:\s
-                    1.-Insertar Dieta\s
-                    2.-Volver a Menú Cocina""");
+            System.out.println("""
+                    ┌───────────────────────────────┐\s
+                    │  Elija una opción:            │\s
+                    │    1.-Insertar Dieta          │\s
+                    │    2.-Volver a Menú Cocina    │\s
+                    └───────────────────────────────┘\s
+                     """);
             int opcion = sc.nextInt();
             switch (opcion) {
                 case 1 -> {
@@ -60,11 +66,11 @@ public class JdbcDieta {
                             case 1 -> {
                                 preparedStmt.execute(); //Se insertan los datos
                                 //Se muestra lo que se ha introducido
-                                System.out.println("DIETA INTRODUCIDA");
+                                System.out.println("✓✓✓ DIETA INTRODUCIDA ✓✓✓");
                             }
-                            case 2 -> MenuCocina.menuCocina(conn); //Le devuelve al menú cocina
+                            case 2 -> insertarDieta(conn); //Le devuelve al principio de este menú
                             default -> {
-                                System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                                System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                                 insercion = false;
                             }
                         }
@@ -72,15 +78,15 @@ public class JdbcDieta {
                 }
                 case 2 -> MenuCocina.menuCocina(conn);
                 default -> {
-                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                     insertarDieta(conn); //Le devulve a este mismo menú
                 }
             }
         } catch (InputMismatchException e) {
-            System.out.println("Formato de número no válido");
+            System.err.println("Formato de número no válido");
             insertarDieta(conn);
         } catch (Exception e) {
-            System.out.println("Error indeterminado");
+            System.err.println("Error indeterminado");
             insertarDieta(conn);
         }
     }
@@ -88,10 +94,14 @@ public class JdbcDieta {
     public static void borrarDieta(Connection conn) {
         try {
             Scanner sc = new Scanner(System.in);
+            System.out.println("───────── BORRAR DIETA ──────── ");
             System.out.println("""
-                    ELIJA UNA OPCIÓN:\s
-                    1.-Borrar Dieta\s
-                    2.-Volver a Menú Cocina""");
+                    ┌───────────────────────────────┐\s
+                    │  Elija una opción:            │\s
+                    │    1.-Borrar Dieta            │\s
+                    │    2.-Volver a Menú Cocina    │\s
+                    └───────────────────────────────┘\s
+                     """);
             int opcion = sc.nextInt();
             boolean borrado = true;
             switch (opcion) {
@@ -111,31 +121,31 @@ public class JdbcDieta {
                                     preparedStmt.setInt(1, codigo);
 
                                     preparedStmt.execute();
-                                    System.out.println("DIETA BORRADA");
+                                    System.out.println("✓✓✓ DIETA BORRADA ✓✓✓");
                                 }
-                                case 2 -> MenuCocina.menuCocina(conn); //Se le devulve al menú cocina
+                                case 2 -> borrarDieta(conn); //Se le devulve a este menú
                                 default -> {
-                                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                                     borrado = false;
                                 }
                             }
                         } while (!borrado); //Se controla que la opción insertada sea válida
                     } else {
-                        System.out.println("La dieta no existe");
+                        System.err.println("La dieta no existe");
                         borrarDieta(conn); //Si no existe se le devuelve a este menú
                     }
                 }
                 case 2 -> MenuCocina.menuCocina(conn); //Se le devulve al menú cocina
                 default -> {
-                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
-                    borrarDieta(conn); //Si el númro no es válido se le devuelve a este menú
+                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
+                    borrarDieta(conn); //Si el número no es válido se le devuelve a este menú
                 }
             }
         } catch (InputMismatchException e) {
-            System.out.println("Formato de número no válido");
+            System.err.println("Formato de número no válido");
             borrarDieta(conn);
         } catch (Exception e) {
-            System.out.println("Error indeterminado");
+            System.err.println("Error indeterminado");
             borrarDieta(conn);
         }
     }
@@ -148,10 +158,14 @@ public class JdbcDieta {
         Scanner scString = new Scanner(System.in);
         PreparedStatement preparedStmt = conn.prepareStatement(query);
         try {
+            System.out.println("───────── EDITAR DIETA ──────── ");
             System.out.println("""
-                    ELIJA UNA OPCIÓN:\s
-                    1.-Editar Dieta\s
-                    2.-Volver a Menú Cocina""");
+                    ┌───────────────────────────────┐\s
+                    │  Elija una opción:            │\s
+                    │    1.-Editar Dieta            │\s
+                    │    2.-Volver a Menú Cocina    │\s
+                    └───────────────────────────────┘\s
+                     """);
             int opcion = scInt.nextInt();
             switch (opcion) {
                 case 1 -> {
@@ -160,13 +174,16 @@ public class JdbcDieta {
                     int codigo = scInt.nextInt();
                     if (consultarSiExiste(conn, codigo) != 0) { //Controlar que la dieta exista
                         System.out.println("""
-                                ¿Qué campo quiere editar de la dieta?:\s
-                                1.-Nombre\s
-                                2.-Desayuno\s
-                                3.-Comida\s
-                                4.-Merienda\s
-                                5.-Cena\s
-                                6.-Volver a Menú Cocina""");
+                                ┌─────────────────────────────────────────────┐\s
+                                │  ¿Qué campo quiere editar de la dieta?:     │\s
+                                │    1.-Nombre                                │\s
+                                │    2.-Desayuno                              │\s
+                                │    3.-Comida                                │\s
+                                │    4.-Merienda                              │\s
+                                │    5.-Cena                                  │\s
+                                │    6.-Volver a Menú Dieta                   │\s
+                                └─────────────────────────────────────────────┘\s
+                                  """);
                         int campo = scInt.nextInt();
                         switch (campo) {
                             case 1 -> {
@@ -209,9 +226,9 @@ public class JdbcDieta {
                                 preparedStmt.setString(1, cena);
                                 preparedStmt.setInt(2, codigo);
                             }
-                            case 6 -> MenuCocina.menuCocina(conn);
+                            case 6 -> MenuDieta.menuDieta(conn);
                             default -> {
-                                System.out.println("Número fuera de rango, vuelva a introducir un número: ");
+                                System.err.println("Número fuera de rango, vuelva a introducir un número: ");
                                 editarDieta(conn);
                             }
                         }
@@ -221,11 +238,11 @@ public class JdbcDieta {
                             switch (editar) {
                                 case 1 -> {
                                     preparedStmt.execute(); //Se inserta el campo que se ha editado
-                                    System.out.println("DIETA EDITADA");
+                                    System.out.println("✓✓✓ DIETA EDITADA ✓✓✓");
                                 }
-                                case 2 -> MenuCocina.menuCocina(conn);
+                                case 2 -> editarDieta(conn);
                                 default -> {
-                                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                                     edicion = false;
                                 }
                             }
@@ -237,27 +254,27 @@ public class JdbcDieta {
                                 case 1 -> editarDieta(conn);
                                 case 2 -> MenuCocina.menuCocina(conn);
                                 default -> {
-                                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                                     seguir = false;
                                 }
                             }
                         } while (!seguir);
                     } else {
-                        System.out.println("La dieta no existe");
+                        System.err.println("La dieta no existe");
                         editarDieta(conn);//Si no existe se le devuleve a este menú
                     }
                 }
                 case 2 -> MenuCocina.menuCocina(conn);
                 default -> {
-                    System.out.println("Número fuera de rango. Vuelva a intoducirlo");
+                    System.err.println("Número fuera de rango. Vuelva a intoducirlo");
                     editarDieta(conn);
                 }
             }
         } catch (InputMismatchException e) {
-            System.out.println("Formato de número no válido");
+            System.err.println("Formato de número no válido");
             editarDieta(conn);
         } catch (Exception e) {
-            System.out.println("Error indeterminado");
+            System.err.println("Error indeterminado");
             editarDieta(conn);
         }
     }
