@@ -43,7 +43,19 @@ public class Paciente {
     }
 
     public void setHabitacion(int habitacion) {
-        this.habitacion = habitacion;
+        Scanner sc = new Scanner(System.in);
+        boolean rango;
+        //Se comprueba que se introduce un número de habitación válido (101-130,201-230,301-330)
+        do {
+            if (habitacion < 131 && habitacion > 100 || habitacion < 231 && habitacion > 200 || habitacion < 331 && habitacion > 300) {
+                this.habitacion = habitacion;
+                rango = true;
+            } else {
+                System.err.println("La habitación no existe. Introduzca otra: ");
+                habitacion = sc.nextInt();
+                rango = false;
+            }
+        } while (!rango);
     }
 
     public int getNhc() {
@@ -51,14 +63,24 @@ public class Paciente {
     }
 
     public void setNhc(int nhc) {
-        this.nhc = nhc;
+        Scanner sc = new Scanner(System.in);
+        String textoNhc;
+        do {
+            textoNhc = String.valueOf(nhc); //El nhc se pasa a texto para controlar que sea un núermo de 5 dígitos
+            if (textoNhc.length() == 5){
+                this.nhc = nhc;
+            } else {
+                System.err.println("NHC no válido. Vuelva a introducirlo (5 Dígitos): ");
+                nhc = sc.nextInt();
+            }
+        } while (textoNhc.length() != 5);
     }
 
     //Método para mostar los datos de la tabla pacientes
     public static void mostrarPacientes(ArrayList<Paciente> pacientes) {
         for (Paciente paciente : pacientes) {
             System.out.println("NHC: " + paciente.getNhc() + " |Nombre: " + paciente.getNombre() + " |Apellidos: " + paciente.getApellidos() +
-                     " |Observaciones: " + paciente.getObservaciones() + " |Habitación: " + paciente.getHabitacion());
+                    " |Observaciones: " + paciente.getObservaciones() + " |Habitación: " + paciente.getHabitacion());
             System.out.println("-----------------------------------");
         }
         System.out.println("───────────────────────────────────");
@@ -69,7 +91,7 @@ public class Paciente {
         Scanner scInt = new Scanner(System.in);
         Scanner scString = new Scanner(System.in);
         System.out.println("─────── DATOS DEL PACIENTE ───────");
-        System.out.println("NHC: ");
+        System.out.println("NHC (5 Dígitos): ");
         this.setNhc(scInt.nextInt());
         System.out.println("Nombre: ");
         this.setNombre(scString.nextLine());

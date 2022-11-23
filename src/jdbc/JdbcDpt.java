@@ -190,7 +190,7 @@ public class JdbcDpt {
                                 preparedStmt.setInt(2, codigo);
                             }
                             case 2 -> {
-                                System.out.println("Introduzca el código de la nueva dieta: ");
+                                System.out.println("Introduzca el código de la nueva dieta (1.-B 2.-BL 3.-SMBL 4.-SMLQ 5.-LQ 6.-TX 7.-ABS): ");
                                 int dieta = scInt.nextInt();
                                 query += "codigo_dieta = ? WHERE codigo = ?";
                                 preparedStmt = conn.prepareStatement(query);
@@ -198,7 +198,7 @@ public class JdbcDpt {
                                 preparedStmt.setInt(2, codigo);
                             }
                             case 3 -> {
-                                System.out.println("Introduzca el código de la nueva toma: ");
+                                System.out.println("Introduzca el código de la nueva toma (1.-Desayuno 2.-Comida 3.-Merienda 4.-Cena): ");
                                 int toma = scInt.nextInt();
                                 query += "codigo_toma = ? WHERE codigo = ?";
                                 preparedStmt = conn.prepareStatement(query);
@@ -206,7 +206,7 @@ public class JdbcDpt {
                                 preparedStmt.setInt(2, codigo);
                             }
                             case 4 -> {
-                                System.out.println("Introduzca la nueva fecha: ");
+                                System.out.println("Introduzca la nueva fecha (dd/mm/yyyy): ");
                                 String fecha = scString.nextLine();
                                 query += "fecha = ? WHERE codigo = ?";
                                 preparedStmt = conn.prepareStatement(query);

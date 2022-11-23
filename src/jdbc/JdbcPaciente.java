@@ -172,16 +172,25 @@ public class JdbcPaciente {
                         System.out.println("""
                                 ┌─────────────────────────────────────────────┐\s
                                 │  ¿Qué campo quiere editar del paciente?:    │\s
-                                │    1.-Nombre                                │\s
-                                │    2.-Apellidos                             │\s
-                                │    3.-Observaciones                         │\s
-                                │    4.-Habitación                            │\s
-                                │    5.-Volver a Menú Paciente                │\s
+                                │    1.-NHC                                   │\s
+                                │    2.-Nombre                                │\s
+                                │    3.-Apellidos                             │\s
+                                │    4.-Observaciones                         │\s
+                                │    5.-Habitación                            │\s
+                                │    6.-Volver a Menú Paciente                │\s
                                 └─────────────────────────────────────────────┘\s
                                   """);
                         int campo = scInt.nextInt();
                         switch (campo) {
                             case 1 -> {
+                                System.out.println("Introduzca el nuevo NHC (5 Dígitos): ");
+                                int nuevoNhc = scInt.nextInt();
+                                query += "nhc = ? WHERE nhc= ?";
+                                preparedStmt = conn.prepareStatement(query);
+                                preparedStmt.setInt(1, nuevoNhc);
+                                preparedStmt.setInt(2, nhc);
+                            }
+                            case 2 -> {
                                 System.out.println("Introduzca el nuevo nombre: ");
                                 String nombre = scString.nextLine();
                                 query += "nombre = ? WHERE nhc= ?";
@@ -189,7 +198,7 @@ public class JdbcPaciente {
                                 preparedStmt.setString(1, nombre);
                                 preparedStmt.setInt(2, nhc);
                             }
-                            case 2 -> {
+                            case 3 -> {
                                 System.out.println("Introduzca los nuevos apellidos: ");
                                 String apellidos = scString.nextLine();
                                 query += "apellidos = ? WHERE nhc = ?";
@@ -197,7 +206,7 @@ public class JdbcPaciente {
                                 preparedStmt.setString(1, apellidos);
                                 preparedStmt.setInt(2, nhc);
                             }
-                            case 3 -> {
+                            case 4 -> {
                                 System.out.println("Introduzca las nuevas observaciones: ");
                                 String observaciones = scString.nextLine();
                                 query += "observaciones = ? WHERE nhc = ?";
@@ -205,7 +214,7 @@ public class JdbcPaciente {
                                 preparedStmt.setString(1, observaciones);
                                 preparedStmt.setInt(2, nhc);
                             }
-                            case 4 -> {
+                            case 5 -> {
                                 System.out.println("Introduzca la nueva habitación: ");
                                 String habitacion = scString.nextLine();
                                 query += "habitacion = ? WHERE nhc = ?";
@@ -213,7 +222,7 @@ public class JdbcPaciente {
                                 preparedStmt.setString(1, habitacion);
                                 preparedStmt.setInt(2, nhc);
                             }
-                            case 5 -> MenuPaciente.menuPaciente(conn);
+                            case 6 -> MenuPaciente.menuPaciente(conn);
                             default -> {
                                 System.err.println("Número fuera de rango. vuelva a introducir un número: ");
                                 editarPaciente(conn);
