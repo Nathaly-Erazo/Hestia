@@ -1,4 +1,4 @@
-import VentanasMedico.Medico;
+import ventanasMedico.Medico;
 import jdbc.JdbcConfig;
 
 import java.sql.Connection;

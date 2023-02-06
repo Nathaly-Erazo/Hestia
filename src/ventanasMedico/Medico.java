@@ -1,4 +1,4 @@
-package VentanasMedico;
+package ventanasMedico;
 
 import entidades.Paciente;
 

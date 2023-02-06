@@ -1,4 +1,4 @@
-package VentanasMedico;
+package ventanasMedico;
 
 import entidades.Dieta;
 import entidades.Dpt;
@@ -7,8 +7,6 @@ import entidades.Toma;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

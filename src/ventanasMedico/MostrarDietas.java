@@ -1,6 +1,6 @@
-package VentanasMedico;
+package ventanasMedico;
 
-import entidades.Toma;
+import entidades.Dieta;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -9,26 +9,27 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MostrarTomas extends JFrame{
+public class MostrarDietas extends JFrame{
     private JPanel contentPane;
     private JTable tablaTomas;
 
     DefaultTableModel myModel;
-    String[] titulos = {"CÓDIGO", "NOMBRE"};
+    String[] titulos = {"CÓDIGO", "NOMBRE","DESAYUNO","COMIDA","MERIENDA","CENA"};
     String[][] datos = {};
-    String query = "SELECT * FROM toma";
+    String query = "SELECT * FROM dieta";
 
-    public MostrarTomas(Connection conn){
+    public MostrarDietas(Connection conn){
         myModel = new DefaultTableModel(datos, titulos);
         tablaTomas.setModel(myModel);
         updateTable(query, conn);
 
         setContentPane(contentPane);
-        setTitle("Consulta Tomas");
-        setSize(300, 150);
+        setTitle("Consulta Dietas");
+        setSize(800, 200);
         setLocationRelativeTo(null);
         setVisible(true);
     }
+
     private void updateTable(String query, Connection conn) {      //preguntar - ACtualizar la tabla
         try {
             emptyTable(); // llamamos al metodo empty tabla para limpiar la tabla
@@ -36,11 +37,16 @@ public class MostrarTomas extends JFrame{
             ResultSet rs = preparedStmt.executeQuery();
 
             while (rs.next()) {
-                Toma toma = new Toma();
-                toma.setCodigo(rs.getInt(1));
-                toma.setNombre(rs.getString(2));
+                Dieta dieta = new Dieta();
 
-                Object[] row = {toma.getCodigo(), toma.getNombre()};
+                dieta.setCodigo(rs.getInt(1));
+                dieta.setNombre(rs.getString(2));
+                dieta.setDesayuno(rs.getString(3));
+                dieta.setComida(rs.getString(4));
+                dieta.setMerienda(rs.getString(5));
+                dieta.setCena(rs.getString(6));
+                Object[] row = {dieta.getCodigo(), dieta.getNombre(), dieta.getDesayuno(),
+                dieta.getComida(),dieta.getMerienda(),dieta.getCena()};
                 myModel.addRow(row);
             }
             preparedStmt.close();

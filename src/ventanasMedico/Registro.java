@@ -1,4 +1,4 @@
-package VentanasMedico;
+package ventanasMedico;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
