@@ -12,6 +12,7 @@ public class Paciente {
     private String observaciones;
     private int habitacion;
     private int nhc;
+    private String fecha_nacimiento;
 
     // Crear los métodos getter y setter para obtener los datos.
     public String getNombre() {
@@ -74,6 +75,14 @@ public class Paciente {
                 nhc = sc.nextInt();
             }
         } while (textoNhc.length() != 5);
+    }
+
+    public String getFecha_nacimiento() {
+        return fecha_nacimiento;
+    }
+
+    public void setFecha_nacimiento(String fecha_nacimiento) {
+        this.fecha_nacimiento = fecha_nacimiento;
     }
 
     //Método para mostar los datos de la tabla pacientes
