@@ -10,15 +10,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MostrarTomas extends JFrame{
+    //Lista de atributos que corresponden los companentes del formulario
     private JPanel contentPane;
     private JTable tablaTomas;
 
+    //Datos para construir la tabla en la que se muestran los datos
     DefaultTableModel myModel;
     String[] titulos = {"CÓDIGO", "NOMBRE"};
     String[][] datos = {};
     String query = "SELECT * FROM toma";
 
     public MostrarTomas(Connection conn){
+        //Se crea la tabla y se rellana
         myModel = new DefaultTableModel(datos, titulos);
         tablaTomas.setModel(myModel);
         updateTable(query, conn);
@@ -30,8 +33,9 @@ public class MostrarTomas extends JFrame{
         setVisible(true);
     }
     private void updateTable(String query, Connection conn) {      //preguntar - ACtualizar la tabla
+        //Método para mostrar y actualizar la tabla
         try {
-            emptyTable(); // llamamos al metodo empty tabla para limpiar la tabla
+            emptyTable(); // Llamamos al metodo empty tabla para limpiar la tabla
             PreparedStatement preparedStmt = conn.prepareStatement(query);
             ResultSet rs = preparedStmt.executeQuery();
 
@@ -48,8 +52,9 @@ public class MostrarTomas extends JFrame{
             System.out.println("");
         }
     }
-    private void emptyTable() {                  // limpia la tabla para que vuelva a cargar la nueva informacion de la BD
-        int filas = tablaTomas.getRowCount(); //validamos el numero de filas de la tabla
+    private void emptyTable() {
+        // Método que limpia la tabla para que vuelva a cargar la nueva informacion de la BD
+        int filas = tablaTomas.getRowCount();
         for (int i = 0; i < filas; i++)
             myModel.removeRow(0);
     }

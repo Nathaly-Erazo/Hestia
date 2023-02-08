@@ -1,4 +1,4 @@
-import ventanasMedico.Medico;
+
 import jdbc.JdbcConfig;
 
 import java.sql.Connection;
@@ -19,7 +19,7 @@ public class Main {
         //Si la conexión se ha realizado, entrará en en el sistema
         if (dbConnection != null){
             //Le lleva al usuario a la ventana de registro
-            new Medico(dbConnection);
+            new Registro(dbConnection);
         }
     }
 }

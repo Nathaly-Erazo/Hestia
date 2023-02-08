@@ -5,11 +5,14 @@ import entidades.Paciente;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 
 
 public class Medico extends JFrame {
+    //Atributos que corresponden a los elementos del formulario
     private JPanel contentPane;
     private JButton addPacienteButton;
     private JButton consultarPacienteButton;
@@ -26,12 +29,14 @@ public class Medico extends JFrame {
     private JButton consultaTomas;
     private JButton consultaDietas;
 
+    //Datos para construir la tabla en la que se muestran los datos
     DefaultTableModel myModel;
     String[] titulos = {"NHC", "NOMBRE", "APELLLIDOS", "FECHA NACIMIENTO", "OBSERVACIONES", "HABITACIÓN",};
     String[][] datos = {};
     String query = "SELECT * FROM paciente";
 
     public Medico(Connection conn) throws SQLException {
+        //Se crea la tabla y se rellana
         myModel = new DefaultTableModel(datos, titulos);
         tablaPacientes.setModel(myModel);
         updateTable(query, conn);
@@ -43,14 +48,15 @@ public class Medico extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
+        //Acciones de los botones de añadir, borrar, modificar y consultar que llevan a los métodos correspondietnes
         addPacienteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     insertarPaciente(conn);
+
                 } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
+                    JOptionPane.showMessageDialog(null,"Dato mal introdicido");
                 }
             }
         });
@@ -86,6 +92,7 @@ public class Medico extends JFrame {
             }
         });
 
+        //Acción de los botones que abre otra ventan en la que se muestras los datos correspondientes
         contulaRegistros.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -108,11 +115,83 @@ public class Medico extends JFrame {
                 new MostrarDietas(conn);
             }
         });
+
+        //Con los siguientes KeyListener se controla lo que introduce el usuario
+        nhcText.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                //Solo deja que se introduzcan números y de 5 dígitos
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+                if (!(numeros))
+                    e.consume();
+                if(nhcText.getText().trim().length()>=5)
+                    e.consume();
+            }
+        });
+
+        habitacionText.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                //Solo deja que se introduzcan números y de 3 dígitos
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57; // ESTOY DICIENDO QUE SOLO SEA MAYOR A 0 Y MENOR=A 9
+                if (!(numeros)) {  //CONDICION CUANDO ES DIFERENTE A UN NUMERO
+                    e.consume();
+                }
+                if(habitacionText.getText().trim().length()>=3) {
+                    e.consume();
+                }
+            }
+        });
+        fechaNacimientoText.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                //Solo deja que se introduzcan números, guiones y tenga una longitud máxima de 10 dígitos
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+                boolean guion = key == 45;
+                if (!(numeros || guion))
+                    e.consume();
+                if(fechaNacimientoText.getText().trim().length()>=10)
+                    e.consume();
+
+            }
+        });
+        nombreText.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                //No deja que introuzcan números
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+                if ((numeros)) {
+                    e.consume();
+                }
+            }
+        });
+
+        apellidosText.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                //No deja que introuzcan números
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+                if ((numeros)) {
+                    e.consume();
+                }
+            }
+        });
     }
 
-    private void updateTable(String query, Connection conn) {      //preguntar - ACtualizar la tabla
+    private void updateTable(String query, Connection conn) {
+        //Método para mostrar y actualizar la tabla
         try {
-            emptyTable(); // llamamos al metodo empty tabla para limpiar la tabla
+            emptyTable(); // Llamamos al metodo empty tabla para limpiar la tabla
             PreparedStatement preparedStmt = conn.prepareStatement(query);
             ResultSet rs = preparedStmt.executeQuery();
 
@@ -133,14 +212,16 @@ public class Medico extends JFrame {
             System.out.println("");
         }
     }
-    private void emptyTable() {                  // limpia la tabla para que vuelva a cargar la nueva informacion de la BD
-        int filas = tablaPacientes.getRowCount(); //validamos el numero de filas de la tabla
+    private void emptyTable() {
+        // Método limpia la tabla para que vuelva a cargar la nueva informacion de la BD
+        int filas = tablaPacientes.getRowCount();
         for (int i = 0; i < filas; i++)
             myModel.removeRow(0);
     }
 
     public void insertarPaciente(Connection conn) throws SQLException {
-        String query = "INSERT INTO paciente (nhc, nombre, apellidos,, fecha_nacimiento, observaciones, habitacion) VALUES (?,?,?,?,?,?)";
+        //Método para insertar un paciente en la BD
+        String query = "INSERT INTO paciente (nhc, nombre, apellidos, fecha_nacimiento, observaciones, habitacion) VALUES (?,?,?,?,?,?)";
         PreparedStatement preparedStmt = conn.prepareStatement(query);
         preparedStmt.setString(1, nhcText.getText());
         preparedStmt.setString(2, nombreText.getText());
@@ -154,11 +235,15 @@ public class Medico extends JFrame {
     }
 
     public void borrarPaciente(Connection conn) throws SQLException {
+        //Método para borrar el paciente de la BD
         String query = "DELETE FROM paciente WHERE nhc = ?";
         PreparedStatement preparedStmt = conn.prepareStatement(query);
         preparedStmt.setString(1, nhcText.getText());
+
+        //Se pregunta primero si se quiere borrar
         int opcion = JOptionPane.showConfirmDialog(null, "¿Seguro que quiere borrar este paciente?");
         if (opcion == JOptionPane.YES_OPTION) {
+            //Si selecciona sí, se borra y se limpian los campos de texto
             preparedStmt.execute();
             JOptionPane.showMessageDialog(null, "Borrado correctamente");
             nhcText.setText("");
@@ -172,7 +257,7 @@ public class Medico extends JFrame {
     }
 
     public void modificarPaciente(Connection conn) throws SQLException {
-
+        //Método para modificar el paciente de la BD
         String query = "UPDATE paciente SET nombre=?, apellidos=?, fecha_nacimiento=?, observaciones=?, habitacion=? WHERE nhc=?";
         PreparedStatement preparedStmt = conn.prepareStatement(query);
         preparedStmt.setString(1, nombreText.getText());
@@ -181,12 +266,14 @@ public class Medico extends JFrame {
         preparedStmt.setString(4, observacionesText.getText());
         preparedStmt.setString(5, habitacionText.getText());
         preparedStmt.setString(6, nhcText.getText());
+
         preparedStmt.execute();
         JOptionPane.showMessageDialog(null, "Paciente editado");
         updateTable(this.query, conn);
     }
 
     public void consultarPaciente(Connection conn) throws SQLException {
+        //Método para consultar los datos del paciente con el nhc que se ha escrito en el campo correspondiente
         String query = "SELECT * FROM paciente WHERE nhc = ?";
         PreparedStatement preparedStatement = conn.prepareStatement(query);
         preparedStatement.setInt(1, Integer.parseInt(nhcText.getText()));

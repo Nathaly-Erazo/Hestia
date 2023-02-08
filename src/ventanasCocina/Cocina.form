@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ventanasCocina.Cocina">
+  <grid id="27dc6" binding="contentPane" layout-manager="GridLayoutManager" row-count="13" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="10" bottom="10" right="10"/>
+    <constraints>
+      <xy x="20" y="20" width="765" height="522"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="988e9" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="10" bottom="10" right="10"/>
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="56d27" class="javax.swing.JTextField" binding="codigoText">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="8ab44" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Cambria" size="14" style="1"/>
+              <text value="NOMBRE"/>
+            </properties>
+          </component>
+          <component id="a68ce" class="javax.swing.JTextField" binding="nombreText">
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="f86fb" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Cambria" size="14" style="1"/>
+              <text value="CÓDIGO"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <component id="9a630" class="javax.swing.JTextField" binding="desayunoText">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="b6eac" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Cambria" size="14" style="1"/>
+          <text value="DESAYUNO"/>
+        </properties>
+      </component>
+      <component id="aed44" class="javax.swing.JTextField" binding="comidaText">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="abf48" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Cambria" size="14" style="1"/>
+          <text value="COMIDA"/>
+        </properties>
+      </component>
+      <component id="a7956" class="javax.swing.JTextField" binding="meriendaText">
+        <constraints>
+          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="8ca88" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Cambria" size="14" style="1"/>
+          <text value="MERIENDA"/>
+        </properties>
+      </component>
+      <component id="6bb48" class="javax.swing.JTextField" binding="cenaText">
+        <constraints>
+          <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="55a9c" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Cambria" size="14" style="1"/>
+          <text value="CENA"/>
+        </properties>
+      </component>
+      <grid id="379d9" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="10" left="10" bottom="10" right="10"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="794" height="24"/>
+          </grid>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="7e509" class="javax.swing.JButton" binding="addDietaButton">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-10382142"/>
+              <font name="Cambria" size="14" style="0"/>
+              <foreground color="-1"/>
+              <text value=" Añadir Dieta"/>
+            </properties>
+          </component>
+          <component id="bd0e5" class="javax.swing.JButton" binding="consultarDietaButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-10382142"/>
+              <font name="Cambria" size="14" style="0"/>
+              <foreground color="-1"/>
+              <text value="Consultar Dieta"/>
+            </properties>
+          </component>
+          <component id="b371f" class="javax.swing.JButton" binding="borrarDietaButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-10382142"/>
+              <font name="Cambria" size="14" style="0"/>
+              <foreground color="-1"/>
+              <text value="Borrar Dieta"/>
+            </properties>
+          </component>
+          <component id="5b913" class="javax.swing.JButton" binding="modificarDIetaButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-10382142"/>
+              <font name="Cambria" size="14" style="0"/>
+              <foreground color="-1"/>
+              <text value="Modificar DIeta"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <component id="5d2c8" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Cambria" size="14" style="1"/>
+          <text value="DIETAS"/>
+        </properties>
+      </component>
+      <scrollpane id="b478f">
+        <constraints>
+          <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="4fc56" class="javax.swing.JTable" binding="tablaDietas">
+            <constraints/>
+            <properties>
+              <font name="Cambria" size="14" style="0"/>
+              <gridColor color="-10382142"/>
+              <selectionBackground color="-10382142"/>
+              <selectionForeground color="-1"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+      <component id="598bf" class="javax.swing.JButton" binding="consultaTomas">
+        <constraints>
+          <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <actionCommand value=""/>
+          <background color="-10382142"/>
+          <font name="Cambria" size="14" style="0"/>
+          <foreground color="-1"/>
+          <text value="Consultar Tomas"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
