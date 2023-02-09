@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ventanasNutricion.VentanaToma">
+  <grid id="27dc6" binding="contentPane" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="10" left="10" bottom="10" right="10"/>
+    <constraints>
+      <xy x="20" y="20" width="589" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="585f4" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="10" left="0" bottom="10" right="0"/>
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="e0cb6" class="javax.swing.JButton" binding="borrarTomaButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-10382142"/>
+              <font name="Cambria" size="14" style="0"/>
+              <foreground color="-1"/>
+              <text value="Borrar Toma"/>
+            </properties>
+          </component>
+          <component id="ac887" class="javax.swing.JButton" binding="modificarTomaButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-10382142"/>
+              <font name="Cambria" size="14" style="0"/>
+              <foreground color="-1"/>
+              <text value="Modificar Toma"/>
+            </properties>
+          </component>
+          <component id="f497d" class="javax.swing.JButton" binding="consultarTomaButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-10382142"/>
+              <font name="Cambria" size="14" style="0"/>
+              <foreground color="-1"/>
+              <text value="Consultar Toma"/>
+            </properties>
+          </component>
+          <component id="b7641" class="javax.swing.JButton" binding="addTomaButton">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-10382142"/>
+              <font name="Cambria" size="14" style="0"/>
+              <foreground color="-1"/>
+              <text value="Añadir Toma"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="a7c7a" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="4e678" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Cambria" size="14" style="1"/>
+              <text value="CÓDIGO"/>
+            </properties>
+          </component>
+          <component id="9c3f" class="javax.swing.JTextField" binding="codigoText">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="507c3" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Cambria" size="14" style="1"/>
+              <text value="NOMBRE"/>
+            </properties>
+          </component>
+          <component id="72b8e" class="javax.swing.JTextField" binding="nombreText">
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+        </children>
+      </grid>
+      <component id="a9f" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Cambria" size="14" style="1"/>
+          <text value="TOMAS"/>
+        </properties>
+      </component>
+      <scrollpane id="4de14">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Cambria" size="14" style="1"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="f5ec4" class="javax.swing.JTable" binding="tablaTomas">
+            <constraints/>
+            <properties>
+              <autoCreateRowSorter value="false"/>
+              <font name="Cambria" size="14" style="0"/>
+              <gridColor color="-10382142"/>
+              <selectionBackground color="-10382142"/>
+              <selectionForeground color="-1"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+    </children>
+  </grid>
+</form>

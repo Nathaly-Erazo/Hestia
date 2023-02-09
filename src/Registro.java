@@ -3,8 +3,6 @@ import ventanasMedico.Medico;
 import ventanasNutricion.Nutricion;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +12,7 @@ import java.util.Objects;
 public class Registro extends JFrame{
     //Lista de atributos que corresponden los companentes del formulario
     private JPanel contentPane;
-    private JComboBox departamentos;
+    private JComboBox<String> departamentos;
     private JPasswordField passwordField1;
     private JButton entrarButton;
 
@@ -28,34 +26,31 @@ public class Registro extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         listaDepartamentos(conn, departamentos);
 
-        entrarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    //Primero se compueba que el usuario y la contraseña existan
-                    if (existeUsuario(conn) != 0) {
-                        if (existePassword(conn) != 0) {
-                            JOptionPane.showMessageDialog(null, "¡Bienvenido/a!");
-                            setVisible(false);
-                            //En caso de que exista se manda al formulario correspondiente al deparatamento que ha introducido
-                            switch (Objects.requireNonNull(departamentos.getSelectedItem()).toString()){
-                                case "Médico" -> new Medico(conn);
-                                case "Nutricion" -> new Nutricion();
-                                case "Cocina" -> new Cocina(conn);
-                            }
-
-                        } else {
-                            JOptionPane.showMessageDialog(null,"Contraseña incorrecta");
+        entrarButton.addActionListener(e -> {
+            try {
+                //Primero se compueba que el usuario y la contraseña existan
+                if (existeUsuario(conn) != 0) {
+                    if (existePassword(conn) != 0) {
+                        JOptionPane.showMessageDialog(null, "¡Bienvenido/a!");
+                        setVisible(false);
+                        //En caso de que exista se manda al formulario correspondiente al deparatamento que ha introducido
+                        switch (Objects.requireNonNull(departamentos.getSelectedItem()).toString()){
+                            case "Médico" -> new Medico(conn);
+                            case "Nutrición" -> new Nutricion(conn);
+                            case "Cocina" -> new Cocina(conn);
                         }
+
+                    } else {
+                        JOptionPane.showMessageDialog(null,"Contraseña incorrecta");
                     }
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
                 }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
         });
     }
 
-    public void listaDepartamentos( Connection conn,JComboBox departamentos) throws SQLException {
+    private void listaDepartamentos(Connection conn, JComboBox<String> departamentos) throws SQLException {
         //Método para que en el combobox aparezacan el nombre los departamentos que están guardados en la base de datos
         String sql= "SELECT nombre FROM departamento";
         PreparedStatement pstmt = conn.prepareStatement(sql);

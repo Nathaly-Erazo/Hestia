@@ -7,8 +7,6 @@ import entidades.Toma;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +17,7 @@ public class MostrarRegistros extends JFrame {
     //Lista de atributos que corresponden los companentes del formulario
     private JPanel contentPane;
     private JTable table1;
-    private JComboBox nombres;
+    private JComboBox<String> nombres;
     private JButton ordenarButton;
 
     //Datos para construir la tabla en la que se muestran los datos
@@ -47,17 +45,12 @@ public class MostrarRegistros extends JFrame {
         setVisible(true);
         listaNombre(conn, nombres);
 
-        /*Una vez se haya selecionado un nombre del combobo,
+        /*Una vez se haya selecionado un nombre del comboBox,
         Se actualiza la tabla con los registros correspondientes a ese nombre*/
-        ordenarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateTable(query, conn);
-            }
-        });
+        ordenarButton.addActionListener(e -> updateTable(query, conn));
     }
 
-    public void listaNombre(Connection conn, JComboBox nombres) throws SQLException {
+    private void listaNombre(Connection conn, JComboBox<String> nombres) throws SQLException {
         //Método para que en el combobox aparezacan los nombres de los pacientes que están guardados en la base de datos
         String sql = "SELECT nombre FROM paciente";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -99,7 +92,7 @@ public class MostrarRegistros extends JFrame {
             }
             preparedStmt.close();
         } catch (SQLException ex) {
-            System.out.println("");
+            System.out.println();
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

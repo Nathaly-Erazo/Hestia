@@ -5,8 +5,6 @@ import ventanasMedico.MostrarTomas;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -50,54 +48,37 @@ public class Cocina extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Acciones de los botones de añadir, borrar, modificar y consultar que llevan a los métodos correspondietnes
-        addDietaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    insertarDieta(conn);
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null,"Dato mal introdicido");
-                }
+        addDietaButton.addActionListener(e -> {
+            try {
+                insertarDieta(conn);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null,"Datos mal introducidos");
             }
         });
-        borrarDietaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    borrarDieta(conn);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+        borrarDietaButton.addActionListener(e -> {
+            try {
+                borrarDieta(conn);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
         });
-        modificarDIetaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    modificarDieta(conn);
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Datos mal introducidos");
-                }
+        modificarDIetaButton.addActionListener(e -> {
+            try {
+                modificarDieta(conn);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Datos mal introducidos");
             }
         });
-        consultarDietaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    consultarDieta(conn);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+        consultarDietaButton.addActionListener(e -> {
+            try {
+                consultarDieta(conn);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
         });
 
         //Acción del botón que abre otra ventana en la que se muestran los datos
-        consultaTomas.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new MostrarTomas(conn);
-            }
-        });
+        consultaTomas.addActionListener(e -> new MostrarTomas(conn));
 
         //Con los siguientes KeyListener se controla lo que introduce el usuario
         codigoText.addKeyListener(new KeyAdapter() {
@@ -148,7 +129,7 @@ public class Cocina extends JFrame {
             }
             preparedStmt.close();
         } catch (SQLException ex) {
-            System.out.println("");
+            System.out.println();
         }
     }
     private void emptyTable() {
@@ -157,7 +138,7 @@ public class Cocina extends JFrame {
         for (int i = 0; i < filas; i++)
             myModel.removeRow(0);
     }
-    public void insertarDieta (Connection conn) throws SQLException {
+    private void insertarDieta (Connection conn) throws SQLException {
         //Método para insertar una dieta en la BD, se deja el código en null porque es autoincremental
         String query = "INSERT INTO dieta (codigo, nombre, desayuno, comida, merienda, cena) VALUES (NULL,?,?,?,?,?) ";
         PreparedStatement preparedStatement = conn.prepareStatement(query);
@@ -170,7 +151,7 @@ public class Cocina extends JFrame {
         JOptionPane.showMessageDialog(null,"Dieta introducida");
         updateTable(this.query, conn);
     }
-    public void borrarDieta (Connection conn) throws SQLException {
+    private void borrarDieta (Connection conn) throws SQLException {
         //Método para borrar la dieta de la BD
         String query = "DELETE FROM dieta WHERE codigo = ?";
         PreparedStatement preparedStatement = conn.prepareStatement(query);
@@ -191,7 +172,7 @@ public class Cocina extends JFrame {
         }
         updateTable(this.query, conn);
     }
-    public void modificarDieta(Connection conn) throws SQLException {
+    private void modificarDieta(Connection conn) throws SQLException {
         //Método para modificar la dieta de la BD
         String query = "UPDATE dieta SET nombre=?, desayuno=?, comida=?, merienda=?, cena=? WHERE codigo =?";
         PreparedStatement preparedStatement = conn.prepareStatement(query);
@@ -206,7 +187,7 @@ public class Cocina extends JFrame {
         JOptionPane.showMessageDialog(null,"Dieta editada");
         updateTable(this.query, conn);
     }
-    public void consultarDieta(Connection conn) throws SQLException {
+    private void consultarDieta(Connection conn) throws SQLException {
         //Método para consultar los datos de la dieta con el código que se ha escrito en el campo correspondiente
         String query = "SELECT * FROM dieta WHERE codigo = ?";
         PreparedStatement preparedStatement  = conn.prepareStatement(query);

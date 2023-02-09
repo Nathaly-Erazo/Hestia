@@ -3,8 +3,6 @@ package ventanasMedico;
 import entidades.Paciente;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.*;
@@ -42,79 +40,54 @@ public class Medico extends JFrame {
         updateTable(query, conn);
 
         setContentPane(contentPane);
-        setTitle("Departamento médico");
+        setTitle("Departamento Médico");
         setSize(800, 400);
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Acciones de los botones de añadir, borrar, modificar y consultar que llevan a los métodos correspondietnes
-        addPacienteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    insertarPaciente(conn);
+        addPacienteButton.addActionListener(e -> {
+            try {
+                insertarPaciente(conn);
 
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null,"Dato mal introdicido");
-                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null,"Datos mal introducidos");
             }
         });
-        borrarPacienteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    borrarPaciente(conn);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+        borrarPacienteButton.addActionListener(e -> {
+            try {
+                borrarPaciente(conn);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
         });
-        modificarPacienteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    modificarPaciente(conn);
+        modificarPacienteButton.addActionListener(e -> {
+            try {
+                modificarPaciente(conn);
 
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Datos mal introducidos");
-                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Datos mal introducidos");
             }
         });
-        consultarPacienteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    consultarPaciente(conn);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+        consultarPacienteButton.addActionListener(e -> {
+            try {
+                consultarPaciente(conn);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
         });
 
         //Acción de los botones que abre otra ventan en la que se muestras los datos correspondientes
-        contulaRegistros.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    new MostrarRegistros(conn);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+        contulaRegistros.addActionListener(e -> {
+            try {
+                new MostrarRegistros(conn);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
         });
-        consultaTomas.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new MostrarTomas(conn);
-            }
-        });
-        consultaDietas.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new MostrarDietas(conn);
-            }
-        });
+        consultaTomas.addActionListener(e -> new MostrarTomas(conn));
+        consultaDietas.addActionListener(e -> new MostrarDietas(conn));
 
         //Con los siguientes KeyListener se controla lo que introduce el usuario
         nhcText.addKeyListener(new KeyAdapter() {
@@ -137,8 +110,8 @@ public class Medico extends JFrame {
                 super.keyTyped(e);
                 //Solo deja que se introduzcan números y de 3 dígitos
                 int key = e.getKeyChar();
-                boolean numeros = key >= 48 && key <= 57; // ESTOY DICIENDO QUE SOLO SEA MAYOR A 0 Y MENOR=A 9
-                if (!(numeros)) {  //CONDICION CUANDO ES DIFERENTE A UN NUMERO
+                boolean numeros = key >= 48 && key <= 57;
+                if (!(numeros)) {
                     e.consume();
                 }
                 if(habitacionText.getText().trim().length()>=3) {
@@ -209,7 +182,7 @@ public class Medico extends JFrame {
             }
             preparedStmt.close();
         } catch (SQLException ex) {
-            System.out.println("");
+            System.out.println();
         }
     }
     private void emptyTable() {
@@ -219,7 +192,7 @@ public class Medico extends JFrame {
             myModel.removeRow(0);
     }
 
-    public void insertarPaciente(Connection conn) throws SQLException {
+    private void insertarPaciente(Connection conn) throws SQLException {
         //Método para insertar un paciente en la BD
         String query = "INSERT INTO paciente (nhc, nombre, apellidos, fecha_nacimiento, observaciones, habitacion) VALUES (?,?,?,?,?,?)";
         PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -234,7 +207,7 @@ public class Medico extends JFrame {
         updateTable(this.query, conn);
     }
 
-    public void borrarPaciente(Connection conn) throws SQLException {
+    private void borrarPaciente(Connection conn) throws SQLException {
         //Método para borrar el paciente de la BD
         String query = "DELETE FROM paciente WHERE nhc = ?";
         PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -246,6 +219,7 @@ public class Medico extends JFrame {
             //Si selecciona sí, se borra y se limpian los campos de texto
             preparedStmt.execute();
             JOptionPane.showMessageDialog(null, "Borrado correctamente");
+            //Se vacían los campos
             nhcText.setText("");
             nombreText.setText("");
             apellidosText.setText("");
@@ -256,7 +230,7 @@ public class Medico extends JFrame {
         updateTable(this.query, conn);
     }
 
-    public void modificarPaciente(Connection conn) throws SQLException {
+    private void modificarPaciente(Connection conn) throws SQLException {
         //Método para modificar el paciente de la BD
         String query = "UPDATE paciente SET nombre=?, apellidos=?, fecha_nacimiento=?, observaciones=?, habitacion=? WHERE nhc=?";
         PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -272,7 +246,7 @@ public class Medico extends JFrame {
         updateTable(this.query, conn);
     }
 
-    public void consultarPaciente(Connection conn) throws SQLException {
+    private void consultarPaciente(Connection conn) throws SQLException {
         //Método para consultar los datos del paciente con el nhc que se ha escrito en el campo correspondiente
         String query = "SELECT * FROM paciente WHERE nhc = ?";
         PreparedStatement preparedStatement = conn.prepareStatement(query);

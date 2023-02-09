@@ -32,7 +32,7 @@ public class MostrarTomas extends JFrame{
         setLocationRelativeTo(null);
         setVisible(true);
     }
-    private void updateTable(String query, Connection conn) {      //preguntar - ACtualizar la tabla
+    private void updateTable(String query, Connection conn) {
         //Método para mostrar y actualizar la tabla
         try {
             emptyTable(); // Llamamos al metodo empty tabla para limpiar la tabla
@@ -49,7 +49,7 @@ public class MostrarTomas extends JFrame{
             }
             preparedStmt.close();
         } catch (SQLException ex) {
-            System.out.println("");
+            System.out.println();
         }
     }
     private void emptyTable() {

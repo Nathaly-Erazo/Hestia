@@ -1,6 +1,6 @@
-package ventanasMedico;
+package ventanasNutricion;
 
-import entidades.Dieta;
+import entidades.Paciente;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -9,25 +9,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MostrarDietas extends JFrame{
+public class MostrarPacientes extends JFrame{
     //Atributos que corresponden a los elementos del formulario
     private JPanel contentPane;
-    private JTable tablaDietas;
+    private JTable tablaPacientes;
 
     //Datos para construir la tabla en la que se muestran los datos
     DefaultTableModel myModel;
-    String[] titulos = {"CÓDIGO", "NOMBRE","DESAYUNO","COMIDA","MERIENDA","CENA"};
+    String[] titulos = {"NHC", "NOMBRE", "APELLLIDOS", "FECHA NACIMIENTO", "OBSERVACIONES", "HABITACIÓN",};
     String[][] datos = {};
-    String query = "SELECT * FROM dieta";
+    String query = "SELECT * FROM paciente";
 
-    public MostrarDietas(Connection conn){
+    public MostrarPacientes(Connection conn){
         //Se crea la tabla y se rellana
         myModel = new DefaultTableModel(datos, titulos);
-        tablaDietas.setModel(myModel);
+        tablaPacientes.setModel(myModel);
         updateTable(query, conn);
 
         setContentPane(contentPane);
-        setTitle("Consulta Dietas");
+        setTitle("Consulta Pacientes");
         setSize(800, 200);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -41,16 +41,15 @@ public class MostrarDietas extends JFrame{
             ResultSet rs = preparedStmt.executeQuery();
 
             while (rs.next()) {
-                Dieta dieta = new Dieta();
-
-                dieta.setCodigo(rs.getInt(1));
-                dieta.setNombre(rs.getString(2));
-                dieta.setDesayuno(rs.getString(3));
-                dieta.setComida(rs.getString(4));
-                dieta.setMerienda(rs.getString(5));
-                dieta.setCena(rs.getString(6));
-                Object[] row = {dieta.getCodigo(), dieta.getNombre(), dieta.getDesayuno(),
-                dieta.getComida(),dieta.getMerienda(),dieta.getCena()};
+                Paciente paciente = new Paciente();
+                paciente.setNhc(rs.getInt(1));
+                paciente.setNombre(rs.getString(2));
+                paciente.setApellidos(rs.getString(3));
+                paciente.setFecha_nacimiento(rs.getString(4));
+                paciente.setObservaciones(rs.getString(5));
+                paciente.setHabitacion(rs.getInt(6));
+                Object[] row = {paciente.getNhc(), paciente.getNombre(), paciente.getApellidos(),
+                        paciente.getFecha_nacimiento(), paciente.getObservaciones(), paciente.getHabitacion()};
                 myModel.addRow(row);
             }
             preparedStmt.close();
@@ -59,8 +58,8 @@ public class MostrarDietas extends JFrame{
         }
     }
     private void emptyTable() {
-        // Método que limpia la tabla para que vuelva a cargar la nueva informacion de la BD
-        int filas = tablaDietas.getRowCount();
+        // Método limpia la tabla para que vuelva a cargar la nueva informacion de la BD
+        int filas = tablaPacientes.getRowCount();
         for (int i = 0; i < filas; i++)
             myModel.removeRow(0);
     }
