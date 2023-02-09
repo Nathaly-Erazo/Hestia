@@ -272,9 +272,9 @@ public class Nutricion extends JFrame {
         //Método para insertar un registro en la BD, el código es null porque es autoincremental
         String query = "INSERT INTO dieta_paciente_toma (codigo, nhc_paciente, codigo_dieta, codigo_toma, fecha) VALUES (NULL,?,?,?,?)";
         PreparedStatement preparedStatement = conn.prepareStatement(query);
-        preparedStatement.setString(1, Objects.requireNonNull(nhcCbx.getSelectedItem()).toString());
-        preparedStatement.setString(2, Objects.requireNonNull(dietasCbx.getSelectedItem()).toString());
-        preparedStatement.setString(3, Objects.requireNonNull(tomasCbx.getSelectedItem()).toString());
+        preparedStatement.setString(1, (String) nhcCbx.getSelectedItem());
+        preparedStatement.setString(2, (String) dietasCbx.getSelectedItem());
+        preparedStatement.setString(3, (String) tomasCbx.getSelectedItem());
         preparedStatement.setString(4,fechaRegistroText.getText());
         preparedStatement.execute();
         JOptionPane.showMessageDialog(null, "Registro introducido");
