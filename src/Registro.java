@@ -21,7 +21,7 @@ public class Registro extends JFrame {
         setContentPane(contentPane);
         setVisible(true);
         setLocationRelativeTo(null);
-        setTitle("Registro");
+        setTitle("Inicio de sesión");
         setSize(400, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         listaDepartamentos(conn, departamentos);
@@ -71,6 +71,7 @@ public class Registro extends JFrame {
     }
 
     private String coincidePassword(Connection conn) throws SQLException {
+        //Método para comprobar que la contraseña introducida corresponde con el departamento seleccionado
         String resultado = null;
         String query = "SELECT password FROM departamento WHERE nombre =?";
         PreparedStatement preparedStatement = conn.prepareStatement(query);

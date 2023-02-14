@@ -15,7 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.Objects;
 
 public class Nutricion extends JFrame {
     //Atributos que corresponden a los elementos del formulario
